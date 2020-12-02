@@ -1,9 +1,10 @@
 spring:
   datasource:
-    username: ""
-    password: ""
-    url: "jdbc:mysql://localhost:3306/ ?serverTimezone=UTC"
+    username: "admincdb"
+    password: "qwerty1234"
+    url: "jdbc:mysql://localhost:3306/WharhammerPainting?serverTimezone=UTC&createDatabaseIfNotExist=true"
   jpa:
     show-sql: true
     hibernate:
+      ddl-auto: "create"
       naming.physical-strategy: "org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl"
