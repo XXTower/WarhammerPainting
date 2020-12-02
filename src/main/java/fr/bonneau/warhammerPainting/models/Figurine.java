@@ -24,8 +24,10 @@ public class Figurine {
 	private Faction faction;
 	@Column(name = "SUBFACTION")
 	private SubFaction subFaction;
-	public Figurine(String name, Faction faction, SubFaction subFaction) {
+	
+	public Figurine(int id, String name, Faction faction, SubFaction subFaction) {
 		super();
+		this.id = id;
 		this.name = name;
 		this.faction = faction;
 		this.subFaction = subFaction;
@@ -50,6 +52,9 @@ public class Figurine {
 	}
 	public int getId() {
 		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 }

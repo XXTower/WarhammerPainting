@@ -21,8 +21,9 @@ public class Painting {
 	@Column(name = "TYPE")
 	private String type;
 
-	public Painting(String name, String type) {
+	public Painting(int id, String name, String type) {
 		super();
+		this.id = id;
 		this.name = name;
 		this.type = type;
 	}
@@ -45,6 +46,10 @@ public class Painting {
 
 	public int getId() {
 		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 	
 	

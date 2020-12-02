@@ -6,6 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 public class UserFigrurine {
 	
@@ -15,13 +17,16 @@ public class UserFigrurine {
 	private int id;
 	
 	@JoinColumn(name = "USER_ID")
-	private int userId;
+	@OneToOne
+	private User user;
 	
 	@JoinColumn(name = "FIGURINE_ID")
-	private int figurineId;
+	@OneToOne
+	private Figurine figurine;
 	
 	@JoinColumn(name = "PAINTING_ID")
-	private List<Integer> listPaintingId;
+	@OneToMany
+	private List<Painting> listPainting;
 	
 	@Column(name = "TITLE")
 	private String title;
@@ -29,37 +34,39 @@ public class UserFigrurine {
 	@Column(name = "DESCRIPTION")
 	private String descripsion;
 
-	public UserFigrurine(int userId, int figurineId, List<Integer> listPaintingId, String title, String descripsion) {
+	public UserFigrurine(int id, User user, Figurine figurine, List<Painting> listPainting, String title,
+			String descripsion) {
 		super();
-		this.userId = userId;
-		this.figurineId = figurineId;
-		this.listPaintingId = listPaintingId;
+		this.id = id;
+		this.user = user;
+		this.figurine = figurine;
+		this.listPainting = listPainting;
 		this.title = title;
 		this.descripsion = descripsion;
 	}
 
-	public int getUserId() {
-		return userId;
+	public User getUser() {
+		return user;
 	}
 
-	public void setUserId(int userId) {
-		this.userId = userId;
+	public void setUser(User user) {
+		this.user = user;
 	}
 
-	public int getFigurineId() {
-		return figurineId;
+	public Figurine getFigurine() {
+		return figurine;
 	}
 
-	public void setFigurineId(int figurineId) {
-		this.figurineId = figurineId;
+	public void setFigurine(Figurine figurine) {
+		this.figurine = figurine;
 	}
 
-	public List<Integer> getListPaintingId() {
-		return listPaintingId;
+	public List<Painting> getListPainting() {
+		return listPainting;
 	}
 
-	public void setListPaintingId(List<Integer> listPaintingId) {
-		this.listPaintingId = listPaintingId;
+	public void setListPainting(List<Painting> listPainting) {
+		this.listPainting = listPainting;
 	}
 
 	public String getTitle() {
@@ -78,8 +85,13 @@ public class UserFigrurine {
 		this.descripsion = descripsion;
 	}
 
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public int getId() {
 		return id;
 	}
 
+	
 }

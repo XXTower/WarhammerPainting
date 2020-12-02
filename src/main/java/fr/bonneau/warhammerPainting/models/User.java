@@ -10,6 +10,10 @@ import javax.persistence.Table;
 @Table(name = "USER")
 public class User {
 
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	@Id
 	@Column(name = "USER_ID")
 	@GeneratedValue
@@ -21,8 +25,9 @@ public class User {
 	@Column(name = "PASSWORD")
 	private String password;
 
-	public User(String username, String password) {
+	public User(int id, String username, String password) {
 		super();
+		this.id = id;
 		this.username = username;
 		this.password = password;
 	}
