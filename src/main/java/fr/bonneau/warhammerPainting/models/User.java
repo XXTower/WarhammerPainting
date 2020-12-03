@@ -15,11 +15,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 @Table(name = "USER")
 public class User {
 
-	public void setId(int id) {
-		this.id = id;
-	}
-
-	@Id
+    @Id
 	@Column(name = "USER_ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
@@ -30,13 +26,14 @@ public class User {
 	@Column(name = "PASSWORD")
 	private String password;
 
-	public User(int id, String username, String password) {
-		super();
-		this.id = id;
-		this.username = username;
-		this.password = password;
-	}
-
+	public int getId() {
+        return id;
+    }
+	
+	public void setId(int id) {
+        this.id = id;
+    }
+	
 	public String getUsername() {
 		return username;
 	}
@@ -51,10 +48,6 @@ public class User {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public int getId() {
-		return id;
 	}
 	
 	@Override
