@@ -34,9 +34,8 @@ public class UserMappeurTest {
     /*------------------ mapToUser ----------------------------------*/
     @Test
     void mapToUserWithNullShouldReturnNull() {
-        userDto = null;
         
-        User userMapper = mappeur.mapToUser(userDto);
+        User userMapper = mappeur.mapToUser(null);
         assertThat(userMapper).isNull();
     }
     
@@ -48,11 +47,10 @@ public class UserMappeurTest {
     
     /*------------------ mapToUsers ----------------------------------*/
     @Test
-    void mapToUsersWithNullListShouldReturnNull() {
-        List<UserDto> userDtos = null;
+    void mapToUsersWithNullListShouldReturnEmptyList() {
         
-        List<User> usersMapper = mappeur.mapToUsers(userDtos);
-        assertThat(usersMapper).isNull();
+        List<User> usersMapper = mappeur.mapToUsers(null);
+        assertThat(usersMapper).isEmpty();
     }
     
     @Test
@@ -75,9 +73,8 @@ public class UserMappeurTest {
     
     /*------------------ mapToDto ----------------------------------*/
     @Test
-    void mapToDtoWihtNullShouldReturnNull() {
-        user = null;
-        UserDto userDtoMapper = mappeur.mapToDto(user);
+    void mapToDtoWihtNullShouldReturnEmptyList() {
+        UserDto userDtoMapper = mappeur.mapToDto(null);
         assertThat(userDtoMapper).isNull();
     }
     
@@ -89,11 +86,9 @@ public class UserMappeurTest {
     
     /*------------------ mapToDtos ----------------------------------*/
     @Test
-    void mapToDtosWithNullListShouldReturnNull() {
-        List<User> users = null;
-        
-        List<UserDto> userDtosMapper = mappeur.mapToDtos(users);
-        assertThat(userDtosMapper).isNull();
+    void mapToDtosWithNullListShouldReturnEmptyList() {
+        List<UserDto> userDtosMapper = mappeur.mapToDtos(null);
+        assertThat(userDtosMapper).isEmpty();
     }
     
     @Test

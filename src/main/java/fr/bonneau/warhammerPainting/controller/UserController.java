@@ -6,16 +6,17 @@ import javax.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
 import fr.bonneau.warhammerPainting.dto.UserDto;
+import fr.bonneau.warhammerPainting.exception.UserNotFoundException;
 import fr.bonneau.warhammerPainting.mappeur.UserMappeur;
 import fr.bonneau.warhammerPainting.models.User;
 import fr.bonneau.warhammerPainting.service.UserService;
@@ -45,12 +46,12 @@ public class UserController {
     }
     
     @GetMapping("/{id}")
-    public ResponseEntity<UserDto> getById(@PathVariable int id){
+    public ResponseEntity<UserDto> getById(@PathVariable int id) throws UserNotFoundException{
         return ResponseEntity.ok(userMappeur.mapToDto(userService.getById(id)));
     }
     
-    @PostMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable int id, @Validated @RequestBody UserDto userDto){
+    @PutMapping("/{id}")
+    public ResponseEntity<?> update(@PathVariable int id, @Valid @RequestBody UserDto userDto){
         if(id != userDto.getId()) {
             return ResponseEntity.badRequest().body("The Id in parameter must be the same in the body of the request");
         }

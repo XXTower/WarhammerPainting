@@ -1,5 +1,6 @@
 package fr.bonneau.warhammerPainting.dto;
 
+import javax.validation.constraints.NotBlank;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -7,7 +8,9 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 public class UserDto {
 
     private int id;
+    @NotBlank
     private String username;
+    @NotBlank
     private String password;
     
     public int getId() {

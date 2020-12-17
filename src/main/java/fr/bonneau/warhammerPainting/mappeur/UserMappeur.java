@@ -1,5 +1,6 @@
 package fr.bonneau.warhammerPainting.mappeur;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -21,8 +22,8 @@ public class UserMappeur {
     }
     
     public List<UserDto> mapToDtos(List<User> users) {
-        if(users == null) return null;
-        return users.stream().map(user -> mapToDto(user)).filter(Objects::nonNull)
+        if(users == null) return new ArrayList<UserDto>();
+        return users.stream().filter(Objects::nonNull).map(user -> mapToDto(user))
                 .collect(Collectors.toList());
     }
     
@@ -32,13 +33,14 @@ public class UserMappeur {
         User user = new User();
         user.setId(userDto.getId());
         user.setUsername(userDto.getUsername());
-        user.setPassword(user.getPassword());
+        user.setPassword(userDto.getPassword());
         return user;
     }
     
     public List<User> mapToUsers(List<UserDto> userDtos){
-        if(userDtos == null) return null;
-        return userDtos.stream().map(userDto -> mapToUser(userDto)).filter(Objects::nonNull)
+        if(userDtos == null) return new ArrayList<User>();
+        return userDtos.stream().filter(Objects::nonNull).map(userDto -> mapToUser(userDto))
                 .collect(Collectors.toList());
+        
     }
 }
