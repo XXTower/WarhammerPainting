@@ -77,6 +77,7 @@ public class UserRepositoryTest {
         User fetchUser = userRepository.saveOrUpdate(newUser);
         
         assertThat(fetchUser).isEqualTo(excepteUser);
+        assertThat(userRepository.getAll()).hasSize(3);
     }
     
     @Test
