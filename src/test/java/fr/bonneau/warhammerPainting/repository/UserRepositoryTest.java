@@ -64,7 +64,7 @@ public class UserRepositoryTest {
     /*-------------------- saveOrUpdate --------------------*/
     
     @Test
-    void saveOrUpdateShouldSaveNewUser() {
+    void saveOrUpdateShouldSaveNewUser() throws UserNotFoundException {
         User newUser = new User();
         newUser.setUsername("toto");
         newUser.setPassword("toto");
@@ -78,10 +78,11 @@ public class UserRepositoryTest {
         
         assertThat(fetchUser).isEqualTo(excepteUser);
         assertThat(userRepository.getAll()).hasSize(3);
+        assertThat(userRepository.getById(3)).isEqualTo(excepteUser);
     }
     
     @Test
-    void saveOrUpdateShouldUpdateOldUser() {
+    void saveOrUpdateShouldUpdateOldUser() throws UserNotFoundException {
         User userToUpdate = new User();
         userToUpdate.setId(2);
         userToUpdate.setUsername("toto");
@@ -95,5 +96,6 @@ public class UserRepositoryTest {
         User fetchUser = userRepository.saveOrUpdate(userToUpdate);
         
         assertThat(fetchUser).isEqualTo(excepteUser);
+        assertThat(userRepository.getById(2)).isEqualTo(excepteUser);
     }
 }
