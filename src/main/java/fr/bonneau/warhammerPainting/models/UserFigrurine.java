@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -32,9 +33,10 @@ public class UserFigrurine {
 	@JoinColumn(name = "FIGURINE_ID")
 	@OneToOne
 	private Figurine figurine;
+
 	
-	@JoinColumn(name = "PAINTING_ID")
 	@OneToMany
+	
 	private List<Painting> listPainting;
 	
 	@Column(name = "TITLE")
