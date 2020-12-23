@@ -39,7 +39,10 @@ public class UserController {
     }
     
     @PostMapping
-    public ResponseEntity<UserDto> create(@Valid @RequestBody UserDto userDto){
+    public ResponseEntity<?> create(@Valid @RequestBody UserDto userDto){
+        if (userDto.getId() != 0) {
+            return ResponseEntity.badRequest().body("The Id must be 0");
+        }
         User user = userMappeur.mapToUser(userDto);
         UserDto userDtoCreate = userMappeur.mapToDto(userService.create(user));
         return ResponseEntity.status(HttpStatus.CREATED).body(userDtoCreate);
