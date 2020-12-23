@@ -1,7 +1,6 @@
 package fr.bonneau.warhammerPainting.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,6 +31,10 @@ public class PaintingService {
 			exception.setMessage("this painting already existe");
 			throw exception;
 		}
-		return reposirory.create(painting);
+		return reposirory.saveOrUpdate(painting);
+	}
+
+	public Painting update(Painting painting) {
+		return reposirory.saveOrUpdate(painting);
 	}
 }

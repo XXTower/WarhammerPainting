@@ -25,11 +25,11 @@ public class PaintingMappeurTest {
 	@BeforeEach
 	public void beforEach() {
 		painting = new Painting();
-		//painting.setId(1);
+		painting.setId(1);
 		painting.setName("abadon black");
 		painting.setType(PaintingTypes.BASE);
 		dto = new PaintingDto();
-		//dto.setId(1);
+		dto.setId(1);
 		dto.setName("abadon black");
 		dto.setType(PaintingTypes.BASE);
 		paintings = new ArrayList<Painting>();

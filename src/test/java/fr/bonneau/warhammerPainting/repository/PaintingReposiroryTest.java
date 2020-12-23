@@ -7,61 +7,88 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.transaction.TestTransaction;
 
-import fr.bonneau.warhammerPainting.exception.AlreadyExistException;
 import fr.bonneau.warhammerPainting.models.Painting;
 import fr.bonneau.warhammerPainting.models.enums.PaintingTypes;
 
+@SpringBootTest
+@Transactional
 public class PaintingReposiroryTest {
 	
-	Painting painting;
-	Painting painting2;
-	List<Painting> paintings;
-	EntityManager entityManager;
-	PaintingReposirory repository;
+	private Painting painting;
+	private Painting painting2;
+	private Painting painting3;
+	private List<Painting> paintings;
+	private PaintingReposirory repository;
+	@PersistenceContext
+    private EntityManager em;
 	
 	@BeforeEach
 	public void beforEach() {
 		painting = new Painting();
-		painting.setName("abadon black");
+		painting.setId(1);
+		painting.setName("red");
 		painting.setType(PaintingTypes.BASE);
 		painting2 = new Painting();
-		painting2.setName("ruineLord brass");
-		painting2.setType(PaintingTypes.BASE);
+		painting2.setId(2);
+		painting2.setName("green");
+		painting2.setType(PaintingTypes.LAYER);
+		painting3 = new Painting();
+		painting3.setName("red");
+		painting3.setType(PaintingTypes.BASE);
 		paintings = new ArrayList<Painting>();
 		paintings.add(painting);
 		paintings.add(painting2);
+		repository = new PaintingReposirory(em);
 	}
 
 	//  -------getAll--------
 	@Test
 	public void getAllTest() {	
-		TestTransaction.start();
 		List<Painting> paintingsTest = repository.getAll();
 		assertEquals(paintings, paintingsTest);
-		TestTransaction.end();
 	}
 	
-	//  ------create--------
+	//  ------saveOrUpdate--------
 	
 	@Test
-	public void creatTest() {
-		TestTransaction.start();
+	public void saveOrUpdateTestSave() {
 		Painting paintingTest;
-		try {
-			paintingTest = repository.create(painting);
-		} catch (AlreadyExistException e) {
-			assertTrue(false);
-		}
-		TestTransaction.end();
+		paintingTest = repository.saveOrUpdate(painting3);
+		painting3.setId(3);
+		assertEquals(painting3, paintingTest);
+
+		List<Painting> paintingsTest = repository.getAll();
+		assertEquals(painting3, paintingsTest.get(2));
+	}
+	
+	@Test
+	public void saveOrUpdateTestUpdate() {
+		Painting paintingTest;
+		painting.setName("black");
+		paintingTest = repository.saveOrUpdate(painting);
+		assertEquals(painting, paintingTest);
 		
-		TestTransaction.start();
-		TypedQuery<Painting> paintingQuery = entityManager.createQuery("FROM Painting",Painting.class);
-		
+		List<Painting> paintingsTest = repository.getAll();
+		assertEquals(painting, paintingsTest.get(0));
+	}
+	
+	//  ------checkIfExiste--------
+	
+	@Test
+	public void checkIfExisteTestTrue() {
+		assertTrue(repository.checkIfExiste(painting));
+	}
+	
+	@Test
+	public void checkIfExisteTestFalse() {
+		assertTrue(repository.checkIfExiste(painting3));
 	}
 }
