@@ -1,6 +1,7 @@
 package fr.bonneau.warhammerPainting.repository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
@@ -13,7 +14,6 @@ import javax.transaction.Transactional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.transaction.TestTransaction;
 
 import fr.bonneau.warhammerPainting.models.Painting;
 import fr.bonneau.warhammerPainting.models.enums.PaintingTypes;
@@ -42,7 +42,7 @@ public class PaintingReposiroryTest {
 		painting2.setType(PaintingTypes.LAYER);
 		painting3 = new Painting();
 		painting3.setName("red");
-		painting3.setType(PaintingTypes.BASE);
+		painting3.setType(PaintingTypes.LAYER);
 		paintings = new ArrayList<Painting>();
 		paintings.add(painting);
 		paintings.add(painting2);
@@ -54,6 +54,19 @@ public class PaintingReposiroryTest {
 	public void getAllTest() {	
 		List<Painting> paintingsTest = repository.getAll();
 		assertEquals(paintings, paintingsTest);
+	}
+	
+	//  ------checkIfExiste--------
+	
+	@Test
+	public void checkIfExisteTestTrue() {
+		assertTrue(repository.checkIfExiste(painting));
+	}
+	
+	@Test
+	public void checkIfExisteTestFalse() {
+		System.out.println("paintings"+ repository.getAll());
+		assertFalse(repository.checkIfExiste(painting3));
 	}
 	
 	//  ------saveOrUpdate--------
@@ -78,17 +91,5 @@ public class PaintingReposiroryTest {
 		
 		List<Painting> paintingsTest = repository.getAll();
 		assertEquals(painting, paintingsTest.get(0));
-	}
-	
-	//  ------checkIfExiste--------
-	
-	@Test
-	public void checkIfExisteTestTrue() {
-		assertTrue(repository.checkIfExiste(painting));
-	}
-	
-	@Test
-	public void checkIfExisteTestFalse() {
-		assertTrue(repository.checkIfExiste(painting3));
 	}
 }

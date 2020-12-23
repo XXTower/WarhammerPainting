@@ -2,6 +2,7 @@ package fr.bonneau.warhammerPainting.mappeur;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
@@ -40,7 +41,7 @@ public class PaintingMappeur {
 			return new ArrayList<PaintingDto>();
 		}
 		return listPaintings.stream()
-				.filter(painting -> painting != null)
+				.filter(Objects::nonNull)
 				.map(painting -> paintingToDto(painting))
 				.collect(Collectors.toList());
 	}
@@ -50,7 +51,7 @@ public class PaintingMappeur {
 			return new ArrayList<Painting>();
 		}
 		return listDtos.stream()
-				.filter(dto -> dto!=null)
+				.filter(Objects::nonNull)
 				.map(dto -> dtoToPainting(dto))
 				.collect(Collectors.toList());
 	}

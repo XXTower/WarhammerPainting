@@ -72,7 +72,7 @@ public class PaintingServiceTest {
 	public void updateTest() throws AlreadyExistException {
 		when(reposirory.saveOrUpdate(painting)).thenReturn(painting);
 		
-		Painting paintingTest = service.create(painting);
+		Painting paintingTest = service.update(painting);
 		assertEquals(painting, paintingTest);
 	}
 }

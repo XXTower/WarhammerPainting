@@ -87,7 +87,7 @@ public class PaintingMappeurTest {
 		List<PaintingDto> dtosTest = mapper.paintingsToDtos(null);
 		assert(dtosTest.isEmpty());
 	}
-	
+
 	//  ------dtosToPaintings------
 	
 	@Test
