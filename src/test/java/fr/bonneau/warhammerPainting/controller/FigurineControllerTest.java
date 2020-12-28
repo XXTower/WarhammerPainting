@@ -24,6 +24,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import fr.bonneau.warhammerPainting.controller.exception.CustomGlobalExceptionHandler;
 import fr.bonneau.warhammerPainting.dto.FigurineDto;
+import fr.bonneau.warhammerPainting.exception.AlreadyExistException;
 import fr.bonneau.warhammerPainting.mappeur.FigurineMappeur;
 import fr.bonneau.warhammerPainting.models.Figurine;
 import fr.bonneau.warhammerPainting.models.enums.Faction;
@@ -89,7 +90,7 @@ public class FigurineControllerTest {
     
     /*--------------------create--------------------*/
     @Test
-    void  createShouldReturnOkAndTheFigurine() throws Exception {
+    void createShouldReturnOkAndTheFigurine() throws Exception {
         figurineDto.setId(0);
         figurine.setId(0);
         when(mappeur.mapToFigurine(figurineDto)).thenReturn(figurine);
@@ -110,6 +111,19 @@ public class FigurineControllerTest {
         
         FigurineDto result = objectMapper.readValue(mockResult, FigurineDto.class);
         assertThat(result).isEqualTo(figurineDto);
+    }
+    
+    @Test
+    void createShouldReturn404WhenAlredyExist() throws Exception {
+        figurineDto.setId(0);
+        figurine.setId(0);
+        when(mappeur.mapToFigurine(figurineDto)).thenReturn(figurine);
+        when(service.create(figurine)).thenThrow(AlreadyExistException.class);
+        
+        mockMvc.perform(post("/api/v1/figurines")
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(objectMapper.writeValueAsString(figurineDto)))
+        .andExpect(status().isBadRequest());
     }
     
     @Test
@@ -195,6 +209,30 @@ public class FigurineControllerTest {
     void updateShouldRetun400WhenIdIsDifferent() throws Exception {
         int id = 2;
 
+        mockMvc.perform(put("/api/v1/figurines/{id}", id)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(objectMapper.writeValueAsString(figurineDto)))
+        .andExpect(status().isBadRequest());
+    }
+    
+    @Test
+    void updateShouldReturn404WhenAlredyExist() throws Exception {
+        int id = 2;
+        figurineDto.setId(0);
+        figurine.setId(0);
+        when(mappeur.mapToFigurine(figurineDto)).thenReturn(figurine);
+        when(service.update(figurine)).thenThrow(AlreadyExistException.class);
+        
+        mockMvc.perform(put("/api/v1/figurines/{id}", id)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(objectMapper.writeValueAsString(figurineDto)))
+        .andExpect(status().isBadRequest());
+    }
+    
+    @Test
+    void updateShouldRetun400WhenIdIsEqualToZero() throws Exception {
+        int id = 0;
+        figurineDto.setId(0);
         mockMvc.perform(put("/api/v1/figurines/{id}", id)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(objectMapper.writeValueAsString(figurineDto)))

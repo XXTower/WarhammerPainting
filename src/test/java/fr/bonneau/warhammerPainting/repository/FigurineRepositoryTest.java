@@ -45,7 +45,7 @@ public class FigurineRepositoryTest {
         assertThat(fetchedFigurines.get(0)).isEqualTo(figurine);
     }
     
-/*-------------------- saveOrUpdate --------------------*/
+    /*-------------------- saveOrUpdate --------------------*/
     
     @Test
     void saveOrUpdateShouldSaveNewFigurine() {
@@ -85,4 +85,17 @@ public class FigurineRepositoryTest {
         assertThat(fetchFigurine).isEqualTo(excepteFigurine);
         assertThat(figurineRepository.getAll().get(1)).isEqualTo(excepteFigurine);
     }
+    
+    /*-------------------- checkIfExiste --------------------*/
+    
+    @Test
+    void checkIfExisteShouldReturnTrue() {
+        assertThat(figurineRepository.checkIfExiste("test")).isTrue();
+    }
+    
+    @Test
+    void checkIfExisteShouldReturnFalse() {
+        assertThat(figurineRepository.checkIfExiste("toto")).isFalse();
+    }
+
 }

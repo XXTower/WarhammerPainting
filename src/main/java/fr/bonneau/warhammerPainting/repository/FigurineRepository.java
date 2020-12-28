@@ -36,7 +36,7 @@ public class FigurineRepository {
         return figurine;
     }
     
-    public boolean checkIfExciste(String name) {
+    public boolean checkIfExiste(String name) {
         Session session = entityManager.unwrap(Session.class);
         Query<Figurine> query = session.createQuery(HQL_CHECK_IF_EXCISTE, Figurine.class);
         query.setParameter("name", name);

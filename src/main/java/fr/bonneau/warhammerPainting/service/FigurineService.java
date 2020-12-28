@@ -6,6 +6,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
+import fr.bonneau.warhammerPainting.exception.AlreadyExistException;
 import fr.bonneau.warhammerPainting.models.Figurine;
 import fr.bonneau.warhammerPainting.repository.FigurineRepository;
 
@@ -23,17 +24,17 @@ public class FigurineService {
     }
     
     @Transactional
-    public Figurine create(Figurine figurine) {
-        if(figurineRepository.checkIfExciste(figurine.getName())) {
-            return null;
+    public Figurine create(Figurine figurine) throws AlreadyExistException {
+        if(figurineRepository.checkIfExiste(figurine.getName())) {
+            throw new AlreadyExistException("figurine");
         }
         return figurineRepository.saveOrUpdate(figurine);
     }
     
     @Transactional
-    public Figurine update(Figurine figurine) {
-        if(figurineRepository.checkIfExciste(figurine.getName())) {
-            return null;
+    public Figurine update(Figurine figurine) throws AlreadyExistException {
+        if(figurineRepository.checkIfExiste(figurine.getName())) {
+            throw new AlreadyExistException("figurine");
         }
         return figurineRepository.saveOrUpdate(figurine);
     }

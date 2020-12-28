@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.bonneau.warhammerPainting.dto.FigurineDto;
+import fr.bonneau.warhammerPainting.exception.AlreadyExistException;
 import fr.bonneau.warhammerPainting.mappeur.FigurineMappeur;
 import fr.bonneau.warhammerPainting.models.Figurine;
 import fr.bonneau.warhammerPainting.service.FigurineService;
@@ -37,9 +38,9 @@ public class FigurineController {
     }
     
     @PostMapping
-    public ResponseEntity<?> create(@Valid @RequestBody FigurineDto figurineDto){
+    public ResponseEntity<?> create(@Valid @RequestBody FigurineDto figurineDto) throws AlreadyExistException{
         if (figurineDto.getId() != 0) {
-            return ResponseEntity.badRequest().body("The Id must be 0");
+            return ResponseEntity.badRequest().body("The Id in body must be equal to 0 or not presente");
         }
         Figurine figurine = figurineMappeur.mapToFigurine(figurineDto);
         FigurineDto figurineDtoCreate = figurineMappeur.mapToDto(figurineService.create(figurine));
@@ -47,9 +48,12 @@ public class FigurineController {
     }
     
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable int id, @Valid @RequestBody FigurineDto figurineDto){
+    public ResponseEntity<?> update(@PathVariable int id, @Valid @RequestBody FigurineDto figurineDto) throws AlreadyExistException{
         if(id != figurineDto.getId()) {
             return ResponseEntity.badRequest().body("The Id in parameter must be the same in the body of the request");
+        }
+        if(figurineDto.getId() == 0) {
+            return ResponseEntity.badRequest().body("The Id in body must be diferente to 0");
         }
         Figurine figurine = figurineMappeur.mapToFigurine(figurineDto);
         FigurineDto figurineDtoUpdate = figurineMappeur.mapToDto(figurineService.update(figurine));
