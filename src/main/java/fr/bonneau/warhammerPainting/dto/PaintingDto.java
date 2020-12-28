@@ -1,11 +1,7 @@
-package fr.bonneau.warhammerPainting.models;
+package fr.bonneau.warhammerPainting.dto;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -13,21 +9,24 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import fr.bonneau.warhammerPainting.models.enums.PaintingTypes;
 
-@Entity
-@Table(name = "PAINTING")
-public class Painting {
+public class PaintingDto {
 
-	
-	@Id
-	@Column(name = "PAINTING_ID")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(name = "NAME")
+	@NotBlank
 	private String name;
 	
-	@Column(name = "TYPE")
+	@NotNull
 	private PaintingTypes type;
+	
+	
+	public int getId() { 
+		return id;
+	}
+	  
+	public void setId(int id) { 
+		this.id = id;
+	}
 
 	public String getName() {
 		return name;
@@ -45,14 +44,6 @@ public class Painting {
 		this.type = type;
 	}
 
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-	
 	@Override
     public boolean equals(Object o) {
         return EqualsBuilder.reflectionEquals(this, o);
