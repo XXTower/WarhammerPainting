@@ -238,6 +238,17 @@ public class UserControllerTest {
     }
     
     @Test
+    void updateShouldRetun400WhenIdIsEqualToZero() throws Exception {
+        int id = 0;
+        userDto.setId(0);
+
+        mockMvc.perform(put("/api/v1/users/{id}", id)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(objectMapper.writeValueAsString(userDto)))
+        .andExpect(status().isBadRequest());
+    }
+    
+    @Test
     void updateShouldReturn400WhenUsernameIsNull() throws Exception {
         int id = 1;
         userDto.setUsername(null);
