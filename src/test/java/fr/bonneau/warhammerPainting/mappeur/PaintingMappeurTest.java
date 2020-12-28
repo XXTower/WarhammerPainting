@@ -2,6 +2,7 @@ package fr.bonneau.warhammerPainting.mappeur;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -74,13 +75,13 @@ public class PaintingMappeurTest {
 	@Test
 	public void paintingsToDtosTestEmptyList() {
 		List<PaintingDto> dtosTest = mapper.paintingsToDtos(new ArrayList<Painting>());
-		assert(dtosTest.isEmpty());
+		assertThat(dtosTest).isEmpty();
 	}
 	
 	@Test
 	public void paintingsToDtosTestNull() {
 		List<PaintingDto> dtosTest = mapper.paintingsToDtos(null);
-		assert(dtosTest.isEmpty());
+		assertThat(dtosTest).isEmpty();
 	}
 
 	//  ------dtosToPaintings------
@@ -96,12 +97,12 @@ public class PaintingMappeurTest {
 	@Test
 	public void dtosToPaintingsTestEmptyList() {
 		List<Painting> paintingsTest = mapper.dtosToPaintings(new ArrayList<PaintingDto>());
-		assert(paintingsTest.isEmpty());
+		assertThat(paintingsTest).isEmpty();
 	}
 	
 	@Test
 	public void dtosToPaintingsTestNull() {
 		List<Painting> paintingsTest = mapper.dtosToPaintings(null);
-		assert(paintingsTest.isEmpty());
+		assertThat(paintingsTest).isEmpty();
 	}
 }
