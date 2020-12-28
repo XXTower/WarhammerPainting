@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 
 import fr.bonneau.warhammerPainting.dto.PaintingDto;
 import fr.bonneau.warhammerPainting.models.Painting;
-import fr.bonneau.warhammerPainting.models.enums.PaintingTypes;
 
 @Component
 public class PaintingMappeur {

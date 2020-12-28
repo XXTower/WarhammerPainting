@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -18,8 +19,6 @@ public class PaintingMappeurTest {
 	
 	Painting painting;
 	PaintingDto dto;
-	List<Painting> paintings;
-	List<PaintingDto> dtos;
 	PaintingMappeur mapper = new PaintingMappeur();
 	
 	@BeforeEach
@@ -32,10 +31,6 @@ public class PaintingMappeurTest {
 		dto.setId(1);
 		dto.setName("abadon black");
 		dto.setType(PaintingTypes.BASE);
-		paintings = new ArrayList<Painting>();
-		paintings.add(painting);
-		dtos = new ArrayList<PaintingDto>();
-		dtos.add(dto);
 	}
 
 	//   ------paintingToDto------
@@ -43,7 +38,6 @@ public class PaintingMappeurTest {
 	@Test
 	public void paintingToDtoTest() {
 		PaintingDto dtoTest = mapper.paintingToDto(painting);
-		
 		assertEquals(dtoTest,dto);
 	}
 	
@@ -58,7 +52,6 @@ public class PaintingMappeurTest {
 	@Test
 	public void dtoToPaintingTest() {
 		Painting paintingTest = mapper.dtoToPainting(dto);
-		
 		assertEquals(paintingTest,painting);
 	}
 	
@@ -72,6 +65,8 @@ public class PaintingMappeurTest {
 
 	@Test
 	public void paintingsToDtosTest() {
+		List<Painting> paintings = Collections.singletonList(painting);
+		List<PaintingDto> dtos = Collections.singletonList(dto);
 		List<PaintingDto> dtosTest = mapper.paintingsToDtos(paintings);
 		assertEquals(dtos, dtosTest);
 	}
@@ -92,6 +87,8 @@ public class PaintingMappeurTest {
 	
 	@Test
 	public void dtosToPaintingsTest() {
+		List<Painting> paintings = Collections.singletonList(painting);
+		List<PaintingDto> dtos = Collections.singletonList(dto);
 		List<Painting> paintingsTest = mapper.dtosToPaintings(dtos);
 		assertEquals(paintings, paintingsTest);
 	}

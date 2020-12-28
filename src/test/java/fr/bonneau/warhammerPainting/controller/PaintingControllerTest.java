@@ -1,6 +1,6 @@
 package fr.bonneau.warhammerPainting.controller;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -24,7 +24,6 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import fr.bonneau.warhammerPainting.controller.exception.CustomGlobalExceptionHandler;
 import fr.bonneau.warhammerPainting.dto.PaintingDto;
-import fr.bonneau.warhammerPainting.dto.UserDto;
 import fr.bonneau.warhammerPainting.exception.AlreadyExistException;
 import fr.bonneau.warhammerPainting.mappeur.PaintingMappeur;
 import fr.bonneau.warhammerPainting.models.Painting;
@@ -77,10 +76,8 @@ public class PaintingControllerTest {
 	
 	@Test
 	public void getAllTest() throws Exception {
-		List<Painting> paintings = new ArrayList<Painting>();
-		paintings.add(painting);
-		List<PaintingDto> dtos = new ArrayList<PaintingDto>();
-		dtos.add(dto);
+		List<Painting> paintings = Collections.singletonList(painting);
+		List<PaintingDto> dtos = Collections.singletonList(dto);
 
 		when(mappeur.paintingsToDtos(paintings)).thenReturn(dtos);
 		when(service.getAll()).thenReturn(paintings);
@@ -181,7 +178,6 @@ public class PaintingControllerTest {
         .getResponse()
         .getContentAsString();
 		
-		System.out.println("result "+result);
 		PaintingDto dtoTest = objectMapper.readValue(result, PaintingDto.class);
 		assertEquals(dto, dtoTest);
 	}
@@ -223,7 +219,7 @@ public class PaintingControllerTest {
 	
 	@Test
 	public void updateTestId0() throws Exception {
-		dto.setId(0);;
+		dto.setId(0);
 		mockMvc.perform(put("/api/v1/paintings/0")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(dto)))

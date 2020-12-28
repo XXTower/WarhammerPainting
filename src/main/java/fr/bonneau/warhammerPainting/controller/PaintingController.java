@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import fr.bonneau.warhammerPainting.dto.PaintingDto;
 import fr.bonneau.warhammerPainting.exception.AlreadyExistException;
 import fr.bonneau.warhammerPainting.mappeur.PaintingMappeur;
+import fr.bonneau.warhammerPainting.models.Painting;
 import fr.bonneau.warhammerPainting.service.PaintingService;
 
 
@@ -44,9 +45,9 @@ public class PaintingController {
 		if(paintingDto.getId() != 0) {
 			return ResponseEntity.badRequest().body("The Id in body must be equal to 0 or not presente");
 		}
-		PaintingDto newPainting;
-		newPainting = mappeur.paintingToDto(service.create(mappeur.dtoToPainting(paintingDto)));
-		return new ResponseEntity<PaintingDto>(newPainting,HttpStatus.CREATED);
+		Painting painting = mappeur.dtoToPainting(paintingDto);
+		PaintingDto newPaintingDto = mappeur.paintingToDto(service.create(painting));
+		return new ResponseEntity<PaintingDto>(newPaintingDto,HttpStatus.CREATED);
 	}
 	
 	 @PutMapping("/{id}")
@@ -59,10 +60,6 @@ public class PaintingController {
 		 }
 		 PaintingDto paintingUpdate;
 		 paintingUpdate = mappeur.paintingToDto(service.update(mappeur.dtoToPainting(paintingDto)));
-		 System.out.println("paintingDto " + paintingDto);
-		 System.out.println("painting " + mappeur.dtoToPainting(paintingDto));
-		 System.out.println("paintingUpdate " + service.update(mappeur.dtoToPainting(paintingDto)));
-		 System.out.println("paintingUpdateDto " + paintingUpdate);
 		 return ResponseEntity.ok(paintingUpdate);
 	 }
 }

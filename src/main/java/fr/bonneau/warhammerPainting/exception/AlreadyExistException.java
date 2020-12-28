@@ -4,14 +4,14 @@ public class AlreadyExistException extends Exception {
 
 	private static final long serialVersionUID = 1L;
 
-	private String message;
+	private String object;
+	
+	public AlreadyExistException(String object) {
+		this.object = object;
+	}
 
 	@Override
 	public String getMessage() {
-		return message;
-	}
-
-	public void setMessage(String message) {
-		this.message = message;
+		return "this "+object+" already existe";
 	}
 }

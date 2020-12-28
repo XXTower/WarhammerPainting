@@ -51,7 +51,7 @@ public class PaintingReposiroryTest {
 
 	//  -------getAll--------
 	@Test
-	public void getAllTest() {	
+	public void getAllTest() {
 		List<Painting> paintingsTest = repository.getAll();
 		assertEquals(paintings, paintingsTest);
 	}
@@ -65,7 +65,6 @@ public class PaintingReposiroryTest {
 	
 	@Test
 	public void checkIfExisteTestFalse() {
-		System.out.println("paintings"+ repository.getAll());
 		assertFalse(repository.checkIfExiste(painting3));
 	}
 	

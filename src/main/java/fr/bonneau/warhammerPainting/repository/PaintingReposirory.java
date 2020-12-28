@@ -3,6 +3,7 @@ package fr.bonneau.warhammerPainting.repository;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 import org.hibernate.Session;
@@ -13,9 +14,10 @@ import fr.bonneau.warhammerPainting.models.Painting;
 @Repository
 public class PaintingReposirory {
 	
-	EntityManager entityManager;
-	private final String ALL = "FROM Painting";
-	private final String WHERE_NAME_AND_TYPE = "FROM Painting WHERE name = :name AND type = :type";
+	@PersistenceContext
+	private EntityManager entityManager;
+	private static final String ALL = "FROM Painting";
+	private static final String WHERE_NAME_AND_TYPE = "FROM Painting WHERE name = :name AND type = :type";
 	
 	
 	public PaintingReposirory(EntityManager entityManager) {
