@@ -27,8 +27,7 @@ public class PaintingService {
 	@Transactional
 	public Painting create(Painting painting) throws AlreadyExistException {
 		if(reposirory.checkIfExiste(painting)) {
-			AlreadyExistException exception = new AlreadyExistException("painting");
-			throw exception;
+			throw new AlreadyExistException("painting");
 		}
 		return reposirory.saveOrUpdate(painting);
 	}

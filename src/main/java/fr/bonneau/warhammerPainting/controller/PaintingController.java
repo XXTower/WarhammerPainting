@@ -58,8 +58,8 @@ public class PaintingController {
 		 if(paintingDto.getId() == 0) {
 			 return ResponseEntity.badRequest().body("The Id in body must be diferente to 0");
 		 }
-		 PaintingDto paintingUpdate;
-		 paintingUpdate = mappeur.paintingToDto(service.update(mappeur.dtoToPainting(paintingDto)));
+		 Painting painting = mappeur.dtoToPainting(paintingDto);
+		 PaintingDto paintingUpdate = mappeur.paintingToDto(service.update(painting));
 		 return ResponseEntity.ok(paintingUpdate);
 	 }
 }

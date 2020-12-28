@@ -12,6 +12,6 @@ public class AlreadyExistException extends Exception {
 
 	@Override
 	public String getMessage() {
-		return "this "+object+" already existe";
+		return String.format("this %s already existe", object);
 	}
 }
