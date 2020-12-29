@@ -8,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -19,7 +18,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 @Entity
 @Table(name = "USER_FIGURINE")
-public class UserFigrurine {
+public class UserFigurine {
 	
 	@Id
 	@Column(name = "USER_FIGURINE_ID")
@@ -44,9 +43,12 @@ public class UserFigrurine {
 	
 	@Column(name = "DESCRIPTION")
 	private String descripsion;
+	
+	@Column(name = "VISBILITY")
+	private boolean visibility;
 
-	public UserFigrurine(int id, User user, Figurine figurine, List<Painting> listPainting, String title,
-			String descripsion) {
+	public UserFigurine(int id, User user, Figurine figurine, List<Painting> listPainting, String title,
+			String descripsion, boolean visibility) {
 		super();
 		this.id = id;
 		this.user = user;
@@ -54,6 +56,7 @@ public class UserFigrurine {
 		this.listPainting = listPainting;
 		this.title = title;
 		this.descripsion = descripsion;
+		this.visibility = visibility;
 	}
 
 	public User getUser() {
@@ -102,6 +105,14 @@ public class UserFigrurine {
 
 	public int getId() {
 		return id;
+	}
+
+	public boolean isVisibility() {
+		return visibility;
+	}
+
+	public void setVisibility(boolean visibility) {
+		this.visibility = visibility;
 	}
 
 	@Override
