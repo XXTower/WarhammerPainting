@@ -3,7 +3,7 @@ package fr.bonneau.warhammerPainting.models.enums;
 public enum SubFaction {
 
 	ULTRAMARINS(Faction.SPACE_MARINS), BLOOD_ANGEL(Faction.SPACE_MARINS),
-	CANOPTECK(Faction.NECRON), SKORPEKH(Faction.NECRON);
+	CANOPTECK(Faction.NECRON), SKORPEKH(Faction.NECRON), NO_SUB_FACTION(null);
 	
 	private Faction faction;
 
