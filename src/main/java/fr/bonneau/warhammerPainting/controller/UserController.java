@@ -39,7 +39,10 @@ public class UserController {
     }
     
     @PostMapping
-    public ResponseEntity<UserDto> create(@Valid @RequestBody UserDto userDto){
+    public ResponseEntity<?> create(@Valid @RequestBody UserDto userDto){
+        if (userDto.getId() != 0) {
+            return ResponseEntity.badRequest().body("The Id in body must be equal to 0 or not presente");
+        }
         User user = userMappeur.mapToUser(userDto);
         UserDto userDtoCreate = userMappeur.mapToDto(userService.create(user));
         return ResponseEntity.status(HttpStatus.CREATED).body(userDtoCreate);
@@ -54,6 +57,9 @@ public class UserController {
     public ResponseEntity<?> update(@PathVariable int id, @Valid @RequestBody UserDto userDto){
         if(id != userDto.getId()) {
             return ResponseEntity.badRequest().body("The Id in parameter must be the same in the body of the request");
+        }
+        if(userDto.getId() == 0) {
+            return ResponseEntity.badRequest().body("The Id in body must be diferente to 0");
         }
         User user = userMappeur.mapToUser(userDto);
         UserDto userDtoUpdate = userMappeur.mapToDto(userService.update(user));

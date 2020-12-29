@@ -87,6 +87,8 @@ public class UserControllerTest {
     /*--------------------create--------------------*/
     @Test
     void createShouldReturnOkAndTheUser() throws Exception {
+        userDto.setId(0);
+        user.setId(0);
         when(mappeur.mapToUser(userDto)).thenReturn(user);
         when(service.create(user)).thenReturn(user);
         when(mappeur.mapToDto(user)).thenReturn(userDto);
@@ -105,6 +107,14 @@ public class UserControllerTest {
 
         UserDto result = objectMapper.readValue(mockResult, UserDto.class);
         assertThat(result).isEqualTo(userDto);
+    }
+    
+    @Test
+    void createShouldReturn400WhenIddifferent0() throws Exception {
+        mockMvc.perform(post("/api/v1/users")
+                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+                        .content(objectMapper.writeValueAsString(userDto)))
+                .andExpect(status().isBadRequest());
     }
 
     @Test
@@ -196,7 +206,7 @@ public class UserControllerTest {
             
     }
 
-    /*----------------------getById------------------------------*/
+    /*----------------------update ------------------------------*/
     @Test
     void updateShouldRetunUserDtoUpdate() throws Exception {
         int id = 1;
@@ -220,6 +230,83 @@ public class UserControllerTest {
     @Test
     void updateShouldRetun400WhenIdIsDifferent() throws Exception {
         int id = 2;
+
+        mockMvc.perform(put("/api/v1/users/{id}", id)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(objectMapper.writeValueAsString(userDto)))
+        .andExpect(status().isBadRequest());
+    }
+    
+    @Test
+    void updateShouldRetun400WhenIdIsEqualToZero() throws Exception {
+        int id = 0;
+        userDto.setId(0);
+
+        mockMvc.perform(put("/api/v1/users/{id}", id)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(objectMapper.writeValueAsString(userDto)))
+        .andExpect(status().isBadRequest());
+    }
+    
+    @Test
+    void updateShouldReturn400WhenUsernameIsNull() throws Exception {
+        int id = 1;
+        userDto.setUsername(null);
+
+        mockMvc.perform(put("/api/v1/users/{id}", id)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(objectMapper.writeValueAsString(userDto)))
+        .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void updateShouldReturn400WhenUsernameIsEmpty() throws Exception {
+        int id = 1;
+        userDto.setUsername("");
+
+        mockMvc.perform(put("/api/v1/users/{id}", id)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(objectMapper.writeValueAsString(userDto)))
+        .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void updateShouldReturn400WhenUsernameIsBlank() throws Exception {
+        int id = 1;
+        userDto.setUsername(" ");
+
+        mockMvc.perform(put("/api/v1/users/{id}", id)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(objectMapper.writeValueAsString(userDto)))
+        .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void updateShouldReturn400WhenPasswordIsNull() throws Exception {
+        int id = 1;
+        userDto.setPassword(null);
+
+        mockMvc.perform(put("/api/v1/users/{id}", id)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(objectMapper.writeValueAsString(userDto)))
+        .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void updateShouldReturn400WhenPasswordIsEmpty() throws Exception {
+        int id = 1;
+        userDto.setPassword("");
+
+        mockMvc.perform(put("/api/v1/users/{id}", id)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .content(objectMapper.writeValueAsString(userDto)))
+        .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void updateShouldReturn400WhenPasswordIsBlank() throws Exception {
+        int id = 1;
+        userDto.setPassword(" ");
 
         mockMvc.perform(put("/api/v1/users/{id}", id)
                 .contentType(MediaType.APPLICATION_JSON_VALUE)

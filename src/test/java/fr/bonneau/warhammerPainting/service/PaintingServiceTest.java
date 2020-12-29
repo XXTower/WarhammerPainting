@@ -3,7 +3,9 @@ package fr.bonneau.warhammerPainting.service;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -58,12 +60,9 @@ public class PaintingServiceTest {
 	@Test
 	public void createTestAlreadyExiste() {
 		when(reposirory.checkIfExiste(painting)).thenReturn(true);
-		
-		try {
-			service.create(painting);
-		} catch (AlreadyExistException e) {
-			assert(true);
-		}
+		Exception exception = assertThrows(AlreadyExistException.class, ()-> service.create(painting));
+        String excpectMessage = "This painting already existe.";
+        assertThat(exception.getMessage()).contains(excpectMessage);
 	}
 	
 	//  ---------update----------
