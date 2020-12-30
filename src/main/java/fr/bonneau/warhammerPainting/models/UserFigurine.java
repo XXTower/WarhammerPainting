@@ -8,7 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -34,30 +34,17 @@ public class UserFigurine {
 	private Figurine figurine;
 
 	
-	@OneToMany
-	
+	@ManyToMany
 	private List<Painting> listPainting;
 	
 	@Column(name = "TITLE")
 	private String title;
 	
 	@Column(name = "DESCRIPTION")
-	private String descripsion;
+	private String description;
 	
 	@Column(name = "VISBILITY")
 	private boolean visibility;
-
-	public UserFigurine(int id, User user, Figurine figurine, List<Painting> listPainting, String title,
-			String descripsion, boolean visibility) {
-		super();
-		this.id = id;
-		this.user = user;
-		this.figurine = figurine;
-		this.listPainting = listPainting;
-		this.title = title;
-		this.descripsion = descripsion;
-		this.visibility = visibility;
-	}
 
 	public User getUser() {
 		return user;
@@ -91,12 +78,12 @@ public class UserFigurine {
 		this.title = title;
 	}
 
-	public String getDescripsion() {
-		return descripsion;
+	public String getDescription() {
+		return description;
 	}
 
 	public void setDescripsion(String descripsion) {
-		this.descripsion = descripsion;
+		this.description = descripsion;
 	}
 
 	public void setId(int id) {

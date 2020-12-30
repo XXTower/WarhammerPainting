@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import fr.bonneau.warhammerPainting.dto.PaintingDto;
 import fr.bonneau.warhammerPainting.dto.UserFigurineDto;
 import fr.bonneau.warhammerPainting.mappeur.UserFigurineMappeur;
 import fr.bonneau.warhammerPainting.models.UserFigurine;
@@ -41,13 +40,13 @@ public class UserFigurineController {
 	}
 	
 	@GetMapping("/user/{userId}")
-	public ResponseEntity<List<UserFigurineDto>> getAllForUser(@PathVariable int userId) {
+	public ResponseEntity<List<UserFigurineDto>> getByUserId(@PathVariable int userId) {
 		List<UserFigurineDto> userFigurineDtos = mappeur.userFigurinesToDtos(service.getByUserId(userId));
 		return ResponseEntity.ok(userFigurineDtos);
 	}
 	
 	@GetMapping("/figurine/{figurineId}")
-	public ResponseEntity<List<UserFigurineDto>> getAllForidFigurine(@PathVariable int figurineId) {
+	public ResponseEntity<List<UserFigurineDto>> getByFigurineId(@PathVariable int figurineId) {
 		List<UserFigurineDto> userFigurineDtos = mappeur.userFigurinesToDtos(service.getByFigurineId(figurineId));
 		return ResponseEntity.ok(userFigurineDtos);
 	}
@@ -73,7 +72,7 @@ public class UserFigurineController {
 		 
 		 UserFigurine UserFigurine = mappeur.dtoToUserFigurine(userFigurineDto);
 		 UserFigurineDto UserFigurineUpdate = mappeur.userFigurineToDto(service.update(UserFigurine));
-		 return new ResponseEntity<UserFigurineDto>(UserFigurineUpdate,HttpStatus.CREATED);
+		 return new ResponseEntity<UserFigurineDto>(UserFigurineUpdate,HttpStatus.OK);
 	}
 	
 	@DeleteMapping("/{id}")
@@ -86,7 +85,7 @@ public class UserFigurineController {
 		 }
 		 
 		 UserFigurine UserFigurine = mappeur.dtoToUserFigurine(userFigurineDto);
-		 UserFigurineDto userFigurineDtoDelete = mappeur.userFigurineToDto(service.dalete(UserFigurine));
+		 UserFigurineDto userFigurineDtoDelete = mappeur.userFigurineToDto(service.delete(UserFigurine));
 		 return ResponseEntity.ok(String.format("the userFigurine %s has been daleted", userFigurineDtoDelete));
 	}
 }

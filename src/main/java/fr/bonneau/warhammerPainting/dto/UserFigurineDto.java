@@ -9,23 +9,20 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import fr.bonneau.warhammerPainting.models.Figurine;
-
 public class UserFigurineDto {
 	
 	@NotNull
 	private UserDto user;
 
 	@NotNull
-	private Figurine figurine;
+	private FigurineDto figurine;
 
 	private List<PaintingDto> listPainting;
 
 	@NotBlank
 	private String title;
 
-	@NotBlank
-	private String descripsion;
+	private String description;
 
 	private int id;
 	
@@ -40,12 +37,12 @@ public class UserFigurineDto {
 		this.user = user;
 	}
 
-	public Figurine getFigurine() {
+	public FigurineDto getFigurine() {
 		
 		return figurine;
 	}
 
-	public void setFigurine(Figurine figurine) {
+	public void setFigurine(FigurineDto figurine) {
 		this.figurine = figurine;
 	}
 
@@ -66,13 +63,13 @@ public class UserFigurineDto {
 		this.title = title;
 	}
 
-	public String getDescripsion() {
+	public String getDescription() {
 		
-		return descripsion;
+		return description;
 	}
 
-	public void setDescripsion(String descripsion) {
-		this.descripsion = descripsion;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public void setId(int id) {

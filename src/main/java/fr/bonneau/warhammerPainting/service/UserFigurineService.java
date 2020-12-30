@@ -42,7 +42,7 @@ public class UserFigurineService {
 	}
 
 	@Transactional
-	public UserFigurine dalete(UserFigurine userFigurine) {
+	public UserFigurine delete(UserFigurine userFigurine) {
 		return repository.delete(userFigurine);
 	}
 

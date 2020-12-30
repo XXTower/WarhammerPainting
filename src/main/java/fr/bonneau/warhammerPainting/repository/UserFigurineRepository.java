@@ -9,7 +9,6 @@ import javax.persistence.TypedQuery;
 import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
-import fr.bonneau.warhammerPainting.models.Painting;
 import fr.bonneau.warhammerPainting.models.UserFigurine;
 
 @Repository
