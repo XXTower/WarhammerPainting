@@ -70,7 +70,7 @@ public class UserFigurineRepositoryTest {
         userFigurine1 = new UserFigurine();
         userFigurine1.setId(1);
 		userFigurine1.setTitle("title");
-		userFigurine1.setDescripsion("Descripsion");
+		userFigurine1.setDescription("Descripsion");
 		userFigurine1.setVisibility(true);
 		userFigurine1.setFigurine(figurine);
 		userFigurine1.setUser(user);
@@ -78,7 +78,7 @@ public class UserFigurineRepositoryTest {
 		userFigurine2 = new UserFigurine();
 		userFigurine2.setId(2);
 		userFigurine2.setTitle("title");
-		userFigurine2.setDescripsion("Descripsion");
+		userFigurine2.setDescription("Descripsion");
 		userFigurine2.setVisibility(true);
 		userFigurine2.setFigurine(figurine2);
 		userFigurine2.setUser(user);
@@ -86,7 +86,7 @@ public class UserFigurineRepositoryTest {
 		userFigurine3 = new UserFigurine();
 		userFigurine3.setId(3);
 		userFigurine3.setTitle("title");
-		userFigurine3.setDescripsion("Descripsion");
+		userFigurine3.setDescription("Descripsion");
 		userFigurine3.setVisibility(true);
 		userFigurine3.setFigurine(figurine);
 		userFigurine3.setUser(user2);
@@ -94,7 +94,7 @@ public class UserFigurineRepositoryTest {
 		userFigurine4 = new UserFigurine();
 		userFigurine4.setId(0);
 		userFigurine4.setTitle("title");
-		userFigurine4.setDescripsion("Descripsion");
+		userFigurine4.setDescription("Descripsion");
 		userFigurine4.setVisibility(true);
 		userFigurine4.setFigurine(figurine2);
 		userFigurine4.setUser(user2);

@@ -31,7 +31,7 @@ public class UserFigurineMappeur {
 		UserFigurine userFigurine = new UserFigurine();
 		userFigurine.setId(dto.getId());
 		userFigurine.setTitle(dto.getTitle());
-		userFigurine.setDescripsion(dto.getDescription());
+		userFigurine.setDescription(dto.getDescription());
 		userFigurine.setVisibility(dto.isVisibility());
 		userFigurine.setFigurine(figurineMappeur.mapToFigurine(dto.getFigurine()));
 		userFigurine.setUser(userMappeur.mapToUser(dto.getUser()));

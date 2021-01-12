@@ -86,7 +86,7 @@ public class UserFigurine {
 		return description;
 	}
 
-	public void setDescripsion(String description) {
+	public void setDescription(String description) {
 		this.description = description;
 	}
 

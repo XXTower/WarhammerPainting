@@ -51,7 +51,7 @@ public class UserFigurineServiceTest {
         userFigurine = new UserFigurine();
         userFigurine.setId(1);
 		userFigurine.setTitle("title");
-		userFigurine.setDescripsion("Descripsion");
+		userFigurine.setDescription("Descripsion");
 		userFigurine.setVisibility(true);
 		userFigurine.setFigurine(figurine);
 		userFigurine.setUser(user);

@@ -94,7 +94,7 @@ public class UserFugurineControlleurTest {
         userFigurine = new UserFigurine();
         userFigurine.setId(1);
 		userFigurine.setTitle("title");
-		userFigurine.setDescripsion("Descripsion");
+		userFigurine.setDescription("Descripsion");
 		userFigurine.setVisibility(true);
 		userFigurine.setFigurine(figurine);
 		userFigurine.setUser(user);
@@ -112,7 +112,7 @@ public class UserFugurineControlleurTest {
 		newUserFigurine = new UserFigurine();
 		newUserFigurine.setId(0);
 		newUserFigurine.setTitle("title");
-		newUserFigurine.setDescripsion("Descripsion");
+		newUserFigurine.setDescription("Descripsion");
 		newUserFigurine.setVisibility(true);
 		newUserFigurine.setFigurine(figurine);
 		newUserFigurine.setUser(user);
