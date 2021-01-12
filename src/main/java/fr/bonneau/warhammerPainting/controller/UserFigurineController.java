@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import fr.bonneau.warhammerPainting.dto.UserFigurineDto;
+import fr.bonneau.warhammerPainting.exception.ObjectNotFoundException;
 import fr.bonneau.warhammerPainting.mappeur.UserFigurineMappeur;
 import fr.bonneau.warhammerPainting.models.UserFigurine;
 import fr.bonneau.warhammerPainting.service.UserFigurineService;
@@ -76,7 +77,7 @@ public class UserFigurineController {
 	}
 	
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> delete(@PathVariable int id, @Valid @RequestBody UserFigurineDto userFigurineDto) {
+	public ResponseEntity<?> delete(@PathVariable int id, @Valid @RequestBody UserFigurineDto userFigurineDto) throws ObjectNotFoundException {
 		if(id != userFigurineDto.getId()) {
 			 return ResponseEntity.badRequest().body("The Id in parameter must be the same in the body of the request");
 		 }
@@ -86,6 +87,6 @@ public class UserFigurineController {
 		 
 		 UserFigurine UserFigurine = mappeur.dtoToUserFigurine(userFigurineDto);
 		 UserFigurineDto userFigurineDtoDelete = mappeur.userFigurineToDto(service.delete(UserFigurine));
-		 return ResponseEntity.ok(String.format("the userFigurine %s has been daleted", userFigurineDtoDelete));
+		 return ResponseEntity.ok(String.format("the userFigurine %s has been daleted", userFigurineDtoDelete.getId()));
 	}
 }

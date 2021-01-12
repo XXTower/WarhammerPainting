@@ -7,10 +7,12 @@ import static org.mockito.Mockito.verify;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import fr.bonneau.warhammerPainting.exception.ObjectNotFoundException;
 import fr.bonneau.warhammerPainting.models.Figurine;
 import fr.bonneau.warhammerPainting.models.Painting;
 import fr.bonneau.warhammerPainting.models.User;
@@ -33,7 +35,7 @@ public class UserFigurineServiceTest {
 		painting.setName("abadon black");
 		painting.setType(PaintingTypes.BASE);
 		
-		List<Painting> paintings = Collections.singletonList(painting);
+		Set<Painting> paintings = Collections.singleton(painting);
 		
 		User user = new User();
 		user.setId(1);
@@ -100,7 +102,7 @@ public class UserFigurineServiceTest {
 		
 		UserFigurine userFigurineTest = service.create(userFigurine);
 		assertEquals(userFigurine, userFigurineTest);
-		verify(reposirory.saveOrUpdate(userFigurine));
+		verify(reposirory).saveOrUpdate(userFigurine);
 	}
 	
 	//  ---------update----------
@@ -111,17 +113,17 @@ public class UserFigurineServiceTest {
 		
 		UserFigurine userFigurineTest = service.update(userFigurine);
 		assertEquals(userFigurine, userFigurineTest);
-		verify(reposirory.saveOrUpdate(userFigurine));
+		verify(reposirory).saveOrUpdate(userFigurine);
 	}
 	
 	//  ---------delete----------
 	
 	@Test
-	public void deleteTest() {
+	public void deleteTest() throws ObjectNotFoundException  {
 		when(reposirory.delete(userFigurine)).thenReturn(userFigurine);
 		
 		UserFigurine userFigurineTest = service.delete(userFigurine);
 		assertEquals(userFigurine, userFigurineTest);
-		verify(reposirory.delete(userFigurine));
+		verify(reposirory).delete(userFigurine);
 	}
 }

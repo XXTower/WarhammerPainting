@@ -6,7 +6,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
-import fr.bonneau.warhammerPainting.exception.UserNotFoundException;
+import fr.bonneau.warhammerPainting.exception.ObjectNotFoundException;
 import fr.bonneau.warhammerPainting.models.User;
 import fr.bonneau.warhammerPainting.repository.UserRepository;
 
@@ -30,7 +30,7 @@ public class UserService {
     }
     
     @Transactional
-    public User getById(int id) throws UserNotFoundException {
+    public User getById(int id) throws ObjectNotFoundException {
         return userRepository.getById(id);
     }
     

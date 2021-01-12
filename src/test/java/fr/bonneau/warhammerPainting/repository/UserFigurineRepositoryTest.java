@@ -1,10 +1,12 @@
 package fr.bonneau.warhammerPainting.repository;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -14,6 +16,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import fr.bonneau.warhammerPainting.exception.ObjectNotFoundException;
 import fr.bonneau.warhammerPainting.models.Figurine;
 import fr.bonneau.warhammerPainting.models.Painting;
 import fr.bonneau.warhammerPainting.models.User;
@@ -42,7 +45,7 @@ public class UserFigurineRepositoryTest {
 		painting.setName("red");
 		painting.setType(PaintingTypes.BASE);
 		
-		List<Painting> paintings = Collections.singletonList(painting);
+		Set<Painting> paintings = Collections.singleton(painting);
 		
 		User user = new User();
 		user.setId(1);
@@ -60,7 +63,7 @@ public class UserFigurineRepositoryTest {
         figurine.setSubFaction(SubFaction.ULTRAMARINS);
         Figurine figurine2 = new Figurine();
         figurine2.setId(2);
-        figurine2.setName("test");
+        figurine2.setName("test2");
         figurine2.setFaction(Faction.NECRON);
         figurine2.setSubFaction(SubFaction.CANOPTECK);
         
@@ -156,15 +159,21 @@ public class UserFigurineRepositoryTest {
 	}
 	
 	@Test
-	public void deleteTest() {
+	public void deleteTest() throws ObjectNotFoundException {
 		UserFigurine userFigurineTest;
 		userFigurineTest = repository.delete(userFigurine1);
-		assertEquals(userFigurine4, userFigurineTest);
+		assertEquals(userFigurine1, userFigurineTest);
 
 		List<UserFigurine> userFigurinesTest = repository.getALL();
 		userFigurines = new ArrayList<UserFigurine>();
 		userFigurines.add(userFigurine2);
 		userFigurines.add(userFigurine3);
 		assertEquals(userFigurines, userFigurinesTest);
+	}
+	
+	@Test
+	public void deleteTestUserFigurineNotFound() throws ObjectNotFoundException {
+		userFigurine1.setId(100);
+		assertThrows(ObjectNotFoundException.class,() -> repository.delete(userFigurine1));
 	}
 }

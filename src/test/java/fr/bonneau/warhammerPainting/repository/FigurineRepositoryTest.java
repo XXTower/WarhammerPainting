@@ -12,7 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import fr.bonneau.warhammerPainting.exception.UserNotFoundException;
+import fr.bonneau.warhammerPainting.exception.ObjectNotFoundException;
 import fr.bonneau.warhammerPainting.models.Figurine;
 import fr.bonneau.warhammerPainting.models.enums.Faction;
 import fr.bonneau.warhammerPainting.models.enums.SubFaction;
@@ -67,7 +67,7 @@ public class FigurineRepositoryTest {
     }
     
     @Test
-    void saveOrUpdateShouldUpdateOldFigurine() throws UserNotFoundException {
+    void saveOrUpdateShouldUpdateOldFigurine() throws ObjectNotFoundException {
         Figurine figurineToUpdate = new Figurine();
         figurineToUpdate.setId(2);
         figurineToUpdate.setName("toto");

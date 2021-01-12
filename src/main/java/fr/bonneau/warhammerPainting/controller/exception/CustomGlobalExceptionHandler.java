@@ -5,14 +5,14 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import fr.bonneau.warhammerPainting.exception.AlreadyExistException;
-import fr.bonneau.warhammerPainting.exception.UserNotFoundException;
+import fr.bonneau.warhammerPainting.exception.ObjectNotFoundException;
 
 
 @RestControllerAdvice
 public class CustomGlobalExceptionHandler {
 
-    @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<Object> handleMethodUserNotFoundException(UserNotFoundException e) {
+    @ExceptionHandler(ObjectNotFoundException.class)
+    public ResponseEntity<Object> handleMethodUserNotFoundException(ObjectNotFoundException e) {
 
         return ResponseEntity.notFound().build();
 

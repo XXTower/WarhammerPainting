@@ -6,6 +6,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
+import fr.bonneau.warhammerPainting.exception.ObjectNotFoundException;
 import fr.bonneau.warhammerPainting.models.UserFigurine;
 import fr.bonneau.warhammerPainting.repository.UserFigurineRepository;
 
@@ -42,7 +43,7 @@ public class UserFigurineService {
 	}
 
 	@Transactional
-	public UserFigurine delete(UserFigurine userFigurine) {
+	public UserFigurine delete(UserFigurine userFigurine) throws ObjectNotFoundException {
 		return repository.delete(userFigurine);
 	}
 

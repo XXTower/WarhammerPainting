@@ -10,7 +10,7 @@ import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
 
-import fr.bonneau.warhammerPainting.exception.UserNotFoundException;
+import fr.bonneau.warhammerPainting.exception.ObjectNotFoundException;
 import fr.bonneau.warhammerPainting.models.User;
 
 @Repository
@@ -32,14 +32,14 @@ public class UserRepository {
         return query.getResultList();
     }
     
-    public User getById(int id) throws UserNotFoundException {
+    public User getById(int id) throws ObjectNotFoundException {
         try {
             Session session = entityManager.unwrap(Session.class);
             Query<User> query = session.createQuery(HQL_GET_BY_ID, User.class);
             query.setParameter("id", id);
             return query.getSingleResult();
         } catch (NoResultException e) {
-            throw new UserNotFoundException();
+            throw new ObjectNotFoundException("User");
         }
         
     }

@@ -27,7 +27,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import fr.bonneau.warhammerPainting.controller.exception.CustomGlobalExceptionHandler;
 import fr.bonneau.warhammerPainting.dto.UserDto;
-import fr.bonneau.warhammerPainting.exception.UserNotFoundException;
+import fr.bonneau.warhammerPainting.exception.ObjectNotFoundException;
 import fr.bonneau.warhammerPainting.mappeur.UserMappeur;
 import fr.bonneau.warhammerPainting.models.User;
 import fr.bonneau.warhammerPainting.service.UserService;
@@ -196,10 +196,10 @@ public class UserControllerTest {
     }
     
     @Test
-    void getByIdShouldReturn405WhenUserNotFound() throws Exception {
+    void getByIdShouldReturn404WhenUserNotFound() throws Exception {
         int id = 1;
 
-        when(service.getById(id)).thenThrow(UserNotFoundException.class);
+        when(service.getById(id)).thenThrow(ObjectNotFoundException.class);
         
         mockMvc.perform(get("/api/v1/users/{id}", id))
                 .andExpect(status().isNotFound());

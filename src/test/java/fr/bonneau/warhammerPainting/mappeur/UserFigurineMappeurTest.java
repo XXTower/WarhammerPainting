@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,44 +29,56 @@ import static org.mockito.Mockito.when;
 
 public class UserFigurineMappeurTest {
 
-	UserFigurineMappeur mapper;
-	UserFigurine userFigurine;
-	UserFigurineDto dto;
+	private UserFigurineMappeur mapper;
+	private UserFigurine userFigurine;
+	private UserFigurineDto dto;
+	private FigurineMappeur figurineMappeur;
+	private UserMappeur userMappeur;
+	private PaintingMappeur paintingMappeur;
+	private Painting painting;
+	private PaintingDto paintingDto;
+	private User user;
+	private UserDto userDto;
+	private Figurine figurine;
+	private FigurineDto figurineDto;
+	private List<Painting> paintingsList;
+	private List<PaintingDto> paintingDtos;
 	
 	@BeforeEach
 	public void beforEach() {
 		
-		Painting painting = new Painting();
+		painting = new Painting();
 		painting.setId(1);
 		painting.setName("abadon black");
 		painting.setType(PaintingTypes.BASE);
 
-		PaintingDto paintingDto = new PaintingDto();
+		paintingDto = new PaintingDto();
 		paintingDto.setId(1);
 		paintingDto.setName("abadon black");
 		paintingDto.setType(PaintingTypes.BASE);
 		
-		List<Painting> paintings = Collections.singletonList(painting);
-		List<PaintingDto> paintingDtos = Collections.singletonList(paintingDto);
+		Set<Painting> paintingsSet = Collections.singleton(painting);
+		paintingsList = Collections.singletonList(painting);
+		paintingDtos = Collections.singletonList(paintingDto);
 		
-		User user = new User();
+		user = new User();
 		user.setId(1);
         user.setUsername("test");
         user.setPassword("test");
 
-        UserDto userDto = new UserDto();
+        userDto = new UserDto();
         userDto = new UserDto();
         userDto.setId(1);
         userDto.setUsername("test");
         userDto.setPassword("test");
         
-        Figurine figurine = new Figurine();
+        figurine = new Figurine();
         figurine.setId(1);
         figurine.setName("test");
         figurine.setFaction(Faction.SPACE_MARINS);
         figurine.setSubFaction(SubFaction.ULTRAMARINS);
         
-        FigurineDto figurineDto = new FigurineDto();
+        figurineDto = new FigurineDto();
         figurineDto.setId(1);
         figurineDto.setName("test");
         figurineDto.setFaction(Faction.SPACE_MARINS);
@@ -78,7 +91,7 @@ public class UserFigurineMappeurTest {
 		userFigurine.setVisibility(true);
 		userFigurine.setFigurine(figurine);
 		userFigurine.setUser(user);
-		userFigurine.setListPainting(paintings);
+		userFigurine.setListPainting(paintingsSet);
 		
 		dto = new UserFigurineDto();
 		dto.setId(1);
@@ -89,23 +102,21 @@ public class UserFigurineMappeurTest {
 		dto.setUser(userDto);
 		dto.setListPainting(paintingDtos);
 		
-		FigurineMappeur figurineMappeur = mock(FigurineMappeur.class);
-		UserMappeur userMappeur = mock(UserMappeur.class);
-		PaintingMappeur paintingMappeur = mock(PaintingMappeur.class);
+		figurineMappeur = mock(FigurineMappeur.class);
+		userMappeur = mock(UserMappeur.class);
+		paintingMappeur = mock(PaintingMappeur.class);
 		mapper = new UserFigurineMappeur(figurineMappeur, userMappeur, paintingMappeur);
 		
-		when(figurineMappeur.mapToDto(figurine)).thenReturn(figurineDto);
-		when(figurineMappeur.mapToFigurine(figurineDto)).thenReturn(figurine);
-		when(userMappeur.mapToDto(user)).thenReturn(userDto);
-		when(userMappeur.mapToUser(userDto)).thenReturn(user);
-		when(paintingMappeur.dtosToPaintings(paintingDtos)).thenReturn(paintings);
-		when(paintingMappeur.paintingsToDtos(paintings)).thenReturn(paintingDtos);
+		
 	}
 
 	//   ------userFigurineToDto------
 
 	@Test
 	public void userFigurineToDtoTest() {
+		when(figurineMappeur.mapToDto(figurine)).thenReturn(figurineDto);
+		when(userMappeur.mapToDto(user)).thenReturn(userDto);
+		when(paintingMappeur.paintingsToDtos(paintingsList)).thenReturn(paintingDtos);
 		UserFigurineDto dtoTest = mapper.userFigurineToDto(userFigurine);
 		assertEquals(dtoTest,dto);
 	}
@@ -120,6 +131,9 @@ public class UserFigurineMappeurTest {
 
 	@Test
 	public void dtoToUserFigurineTest() {
+		when(figurineMappeur.mapToFigurine(figurineDto)).thenReturn(figurine);
+		when(userMappeur.mapToUser(userDto)).thenReturn(user);
+		when(paintingMappeur.dtosToPaintings(paintingDtos)).thenReturn(paintingsList);
 		UserFigurine userFigurineTest = mapper.dtoToUserFigurine(dto);
 		assertEquals(userFigurineTest,userFigurine);
 	}
@@ -134,6 +148,9 @@ public class UserFigurineMappeurTest {
 
 	@Test
 	public void userFigurinesToDtosTest() {
+		when(figurineMappeur.mapToDto(figurine)).thenReturn(figurineDto);
+		when(userMappeur.mapToDto(user)).thenReturn(userDto);
+		when(paintingMappeur.paintingsToDtos(paintingsList)).thenReturn(paintingDtos);
 		List<UserFigurine> userFigurines = Collections.singletonList(userFigurine);
 		List<UserFigurineDto> dtos = Collections.singletonList(dto);
 		List<UserFigurineDto> dtosTest = mapper.userFigurinesToDtos(userFigurines);
@@ -156,6 +173,9 @@ public class UserFigurineMappeurTest {
 	
 	@Test
 	public void dtosToUserFigurinesTest() {
+		when(figurineMappeur.mapToFigurine(figurineDto)).thenReturn(figurine);
+		when(userMappeur.mapToUser(userDto)).thenReturn(user);
+		when(paintingMappeur.dtosToPaintings(paintingDtos)).thenReturn(paintingsList);
 		List<UserFigurine> userFigurines = Collections.singletonList(userFigurine);
 		List<UserFigurineDto> dtos = Collections.singletonList(dto);
 		List<UserFigurine> userFigurinesTest = mapper.dtosToUserFigurines(dtos);

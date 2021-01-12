@@ -1,6 +1,7 @@
 package fr.bonneau.warhammerPainting.mappeur;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -8,6 +9,7 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
 
 import fr.bonneau.warhammerPainting.dto.UserFigurineDto;
+import fr.bonneau.warhammerPainting.models.Painting;
 import fr.bonneau.warhammerPainting.models.UserFigurine;
 
 @Component
@@ -33,7 +35,7 @@ public class UserFigurineMappeur {
 		userFigurine.setVisibility(dto.isVisibility());
 		userFigurine.setFigurine(figurineMappeur.mapToFigurine(dto.getFigurine()));
 		userFigurine.setUser(userMappeur.mapToUser(dto.getUser()));
-		userFigurine.setListPainting(paintingMappeur.dtosToPaintings(dto.getListPainting()));
+		userFigurine.setListPainting(new HashSet<Painting>(paintingMappeur.dtosToPaintings(dto.getListPainting())));
 		return userFigurine;
 	}
 	
@@ -58,7 +60,7 @@ public class UserFigurineMappeur {
 		dto.setVisibility(userFigurine.isVisibility());
 		dto.setFigurine(figurineMappeur.mapToDto(userFigurine.getFigurine()));
 		dto.setUser(userMappeur.mapToDto(userFigurine.getUser()));
-		dto.setListPainting(paintingMappeur.paintingsToDtos(userFigurine.getListPainting()));
+		dto.setListPainting(paintingMappeur.paintingsToDtos(new ArrayList<Painting>(userFigurine.getListPainting())));
 		return dto;
 	}
 	

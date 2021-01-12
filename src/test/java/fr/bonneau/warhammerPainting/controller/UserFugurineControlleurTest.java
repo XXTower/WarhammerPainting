@@ -13,6 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,6 +30,7 @@ import fr.bonneau.warhammerPainting.dto.FigurineDto;
 import fr.bonneau.warhammerPainting.dto.PaintingDto;
 import fr.bonneau.warhammerPainting.dto.UserDto;
 import fr.bonneau.warhammerPainting.dto.UserFigurineDto;
+import fr.bonneau.warhammerPainting.exception.ObjectNotFoundException;
 import fr.bonneau.warhammerPainting.mappeur.UserFigurineMappeur;
 import fr.bonneau.warhammerPainting.models.Figurine;
 import fr.bonneau.warhammerPainting.models.Painting;
@@ -63,7 +65,7 @@ public class UserFugurineControlleurTest {
 		paintingDto.setName("abadon black");
 		paintingDto.setType(PaintingTypes.BASE);
 		
-		List<Painting> paintings = Collections.singletonList(painting);
+		Set<Painting> paintings = Collections.singleton(painting);
 		List<PaintingDto> paintingDtos = Collections.singletonList(paintingDto);
 		
 		User user = new User();
@@ -197,7 +199,7 @@ public class UserFugurineControlleurTest {
 		
 		UserFigurineDto dtoTest = objectMapper.readValue(result, UserFigurineDto.class);
 		assertEquals(dto, dtoTest);
-		verify(service.create(newUserFigurine));
+		verify(service).create(newUserFigurine);
 	}
 	
 	@Test
@@ -271,7 +273,7 @@ public class UserFugurineControlleurTest {
 		
 		UserFigurineDto dtoTest = objectMapper.readValue(result, UserFigurineDto.class);
 		assertEquals(dto, dtoTest);
-		verify(service.update(userFigurine));
+		verify(service).update(userFigurine);
 	}
 	
 	@Test
@@ -352,9 +354,8 @@ public class UserFugurineControlleurTest {
         .getResponse()
         .getContentAsString();
 		
-		UserFigurineDto dtoTest = objectMapper.readValue(result, UserFigurineDto.class);
-		assertEquals(dto, dtoTest);
-		verify(service.delete(userFigurine));
+		assertEquals("the userFigurine 1 has been daleted", result);
+		verify(service).delete(userFigurine);
 	}
 	
 	@Test
@@ -417,6 +418,17 @@ public class UserFugurineControlleurTest {
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(dto)))
 		.andExpect(status().isBadRequest());
+	}
+	
+	@Test
+	public void deleteTestUserFigurineNotFound() throws Exception {
+		when(mappeur.dtoToUserFigurine(dto)).thenReturn(userFigurine);
+		when(service.delete(userFigurine)).thenThrow(new ObjectNotFoundException("userFigurine"));
+		
+		mockMvc.perform(delete("/api/v1/userFigurine/1")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString(dto)))
+		.andExpect(status().isNotFound());
 	}
 
 }

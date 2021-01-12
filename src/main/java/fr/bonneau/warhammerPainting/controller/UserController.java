@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 import fr.bonneau.warhammerPainting.dto.UserDto;
-import fr.bonneau.warhammerPainting.exception.UserNotFoundException;
+import fr.bonneau.warhammerPainting.exception.ObjectNotFoundException;
 import fr.bonneau.warhammerPainting.mappeur.UserMappeur;
 import fr.bonneau.warhammerPainting.models.User;
 import fr.bonneau.warhammerPainting.service.UserService;
@@ -49,7 +49,7 @@ public class UserController {
     }
     
     @GetMapping("/{id}")
-    public ResponseEntity<UserDto> getById(@PathVariable int id) throws UserNotFoundException{
+    public ResponseEntity<UserDto> getById(@PathVariable int id) throws ObjectNotFoundException{
         return ResponseEntity.ok(userMappeur.mapToDto(userService.getById(id)));
     }
     

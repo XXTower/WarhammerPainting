@@ -10,7 +10,7 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import fr.bonneau.warhammerPainting.exception.UserNotFoundException;
+import fr.bonneau.warhammerPainting.exception.ObjectNotFoundException;
 import fr.bonneau.warhammerPainting.models.User;
 import fr.bonneau.warhammerPainting.repository.UserRepository;
 
@@ -54,7 +54,7 @@ public class UserServiceTest {
     
     /*--------------------getById--------------------*/
     @Test
-    void getByIdRetunUser() throws UserNotFoundException {
+    void getByIdRetunUser() throws ObjectNotFoundException {
         int id = 1;
         
         when(userRepository.getById(id)).thenReturn(user);

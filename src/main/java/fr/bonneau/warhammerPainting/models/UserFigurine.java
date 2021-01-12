@@ -1,6 +1,6 @@
 package fr.bonneau.warhammerPainting.models;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -35,7 +36,10 @@ public class UserFigurine {
 
 	
 	@ManyToMany
-	private List<Painting> listPainting;
+	@JoinTable(name="PAINTING_FIGURINE",
+	   joinColumns = @JoinColumn(name="USER_FIGURINE_ID"),
+	   inverseJoinColumns = @JoinColumn(name = "PAINTING_ID"))
+	private Set<Painting> listPainting;
 	
 	@Column(name = "TITLE")
 	private String title;
@@ -62,11 +66,11 @@ public class UserFigurine {
 		this.figurine = figurine;
 	}
 
-	public List<Painting> getListPainting() {
+	public Set<Painting> getListPainting() {
 		return listPainting;
 	}
 
-	public void setListPainting(List<Painting> listPainting) {
+	public void setListPainting(Set<Painting> listPainting) {
 		this.listPainting = listPainting;
 	}
 
