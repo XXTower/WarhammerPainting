@@ -1,6 +1,6 @@
 package fr.bonneau.warhammerPainting.models;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,8 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinColumns;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -19,7 +19,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 @Entity
 @Table(name = "USER_FIGURINE")
-public class UserFigrurine {
+public class UserFigurine {
 	
 	@Id
 	@Column(name = "USER_FIGURINE_ID")
@@ -35,26 +35,20 @@ public class UserFigrurine {
 	private Figurine figurine;
 
 	
-	@OneToMany
-	
-	private List<Painting> listPainting;
+	@ManyToMany
+	@JoinTable(name="PAINTING_FIGURINE",
+	   joinColumns = @JoinColumn(name="USER_FIGURINE_ID"),
+	   inverseJoinColumns = @JoinColumn(name = "PAINTING_ID"))
+	private Set<Painting> listPainting;
 	
 	@Column(name = "TITLE")
 	private String title;
 	
 	@Column(name = "DESCRIPTION")
-	private String descripsion;
-
-	public UserFigrurine(int id, User user, Figurine figurine, List<Painting> listPainting, String title,
-			String descripsion) {
-		super();
-		this.id = id;
-		this.user = user;
-		this.figurine = figurine;
-		this.listPainting = listPainting;
-		this.title = title;
-		this.descripsion = descripsion;
-	}
+	private String description;
+	
+	@Column(name = "VISBILITY")
+	private boolean visibility;
 
 	public User getUser() {
 		return user;
@@ -72,11 +66,11 @@ public class UserFigrurine {
 		this.figurine = figurine;
 	}
 
-	public List<Painting> getListPainting() {
+	public Set<Painting> getListPainting() {
 		return listPainting;
 	}
 
-	public void setListPainting(List<Painting> listPainting) {
+	public void setListPainting(Set<Painting> listPainting) {
 		this.listPainting = listPainting;
 	}
 
@@ -88,12 +82,12 @@ public class UserFigrurine {
 		this.title = title;
 	}
 
-	public String getDescripsion() {
-		return descripsion;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setDescripsion(String descripsion) {
-		this.descripsion = descripsion;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public void setId(int id) {
@@ -102,6 +96,14 @@ public class UserFigrurine {
 
 	public int getId() {
 		return id;
+	}
+
+	public boolean isVisibility() {
+		return visibility;
+	}
+
+	public void setVisibility(boolean visibility) {
+		this.visibility = visibility;
 	}
 
 	@Override

@@ -13,7 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import fr.bonneau.warhammerPainting.exception.UserNotFoundException;
+import fr.bonneau.warhammerPainting.exception.ObjectNotFoundException;
 import fr.bonneau.warhammerPainting.models.User;
 
 @SpringBootTest
@@ -47,7 +47,7 @@ public class UserRepositoryTest {
     /*-------------------- getById --------------------*/
     
     @Test
-    void getByIdReturnUser() throws UserNotFoundException {
+    void getByIdReturnUser() throws ObjectNotFoundException {
         User fetchedUser = userRepository.getById(1);
         
         assertThat(fetchedUser).isEqualTo(user);
@@ -55,7 +55,7 @@ public class UserRepositoryTest {
     
     @Test
     void getByIdShouldThrowUserNotFound() {
-        Exception exception = assertThrows(UserNotFoundException.class, ()->userRepository.getById(13));
+        Exception exception = assertThrows(ObjectNotFoundException.class, ()->userRepository.getById(13));
         
         String excpectMessage = "User not found.";
         assertThat(exception.getMessage()).contains(excpectMessage);
@@ -64,7 +64,7 @@ public class UserRepositoryTest {
     /*-------------------- saveOrUpdate --------------------*/
     
     @Test
-    void saveOrUpdateShouldSaveNewUser() throws UserNotFoundException {
+    void saveOrUpdateShouldSaveNewUser() throws ObjectNotFoundException {
         User newUser = new User();
         newUser.setUsername("toto");
         newUser.setPassword("toto");
@@ -82,7 +82,7 @@ public class UserRepositoryTest {
     }
     
     @Test
-    void saveOrUpdateShouldUpdateOldUser() throws UserNotFoundException {
+    void saveOrUpdateShouldUpdateOldUser() throws ObjectNotFoundException {
         User userToUpdate = new User();
         userToUpdate.setId(2);
         userToUpdate.setUsername("toto");
