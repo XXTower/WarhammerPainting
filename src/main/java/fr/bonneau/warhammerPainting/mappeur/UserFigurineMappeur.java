@@ -14,9 +14,9 @@ import fr.bonneau.warhammerPainting.models.UserFigurine;
 
 @Component
 public class UserFigurineMappeur {
-	FigurineMappeur figurineMappeur;
-	UserMappeur userMappeur;
-	PaintingMappeur paintingMappeur;
+	private FigurineMappeur figurineMappeur;
+	private UserMappeur userMappeur;
+	private PaintingMappeur paintingMappeur;
 
 	public UserFigurineMappeur(FigurineMappeur figurineMappeur, UserMappeur userMappeur, PaintingMappeur paintingMappeur) {
 		this.figurineMappeur = figurineMappeur;
@@ -39,11 +39,11 @@ public class UserFigurineMappeur {
 		return userFigurine;
 	}
 	
-	public List<UserFigurine> dtosToUserFigurines(List<UserFigurineDto> Dtos) {
-		if (Dtos == null) {
+	public List<UserFigurine> dtosToUserFigurines(List<UserFigurineDto> dtos) {
+		if (dtos == null) {
 			return new ArrayList<UserFigurine>();
 		}
-		return Dtos.stream()
+		return dtos.stream()
 				.filter(Objects::nonNull)
 				.map(dto -> dtoToUserFigurine(dto))
 				.collect(Collectors.toList());

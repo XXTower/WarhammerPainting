@@ -146,7 +146,7 @@ public class UserFugurineControlleurTest {
 		when(mappeur.userFigurinesToDtos(userFigurines)).thenReturn(dtos);
 		when(service.getAll()).thenReturn(userFigurines);
 
-		mockMvc.perform(get("/api/v1/userFigurine"))
+		mockMvc.perform(get("/api/v1/userFigurines"))
 			.andExpect(status().isOk())
 			.andExpect(content().json(objectMapper.writeValueAsString(dtos)));
 	}
@@ -161,7 +161,7 @@ public class UserFugurineControlleurTest {
 		when(mappeur.userFigurinesToDtos(userFigurines)).thenReturn(dtos);
 		when(service.getByUserId(1)).thenReturn(userFigurines);
 
-		mockMvc.perform(get("/api/v1/userFigurine/user/1"))
+		mockMvc.perform(get("/api/v1/userFigurines/user/1"))
 			.andExpect(status().isOk())
 			.andExpect(content().json(objectMapper.writeValueAsString(dtos)));
 	}
@@ -176,7 +176,7 @@ public class UserFugurineControlleurTest {
 		when(mappeur.userFigurinesToDtos(userFigurines)).thenReturn(dtos);
 		when(service.getByFigurineId(1)).thenReturn(userFigurines);
 
-		mockMvc.perform(get("/api/v1/userFigurine/figurine/1"))
+		mockMvc.perform(get("/api/v1/userFigurine/figurines/1"))
 			.andExpect(status().isOk())
 			.andExpect(content().json(objectMapper.writeValueAsString(dtos)));
 	}
@@ -189,7 +189,7 @@ public class UserFugurineControlleurTest {
 		when(mappeur.userFigurineToDto(userFigurine)).thenReturn(dto);
 		when(service.create(newUserFigurine)).thenReturn(userFigurine);
 		
-		String result = mockMvc.perform(post("/api/v1/userFigurine")
+		String result = mockMvc.perform(post("/api/v1/userFigurines")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(newDto)))
 		.andExpect(status().isCreated())
@@ -204,7 +204,7 @@ public class UserFugurineControlleurTest {
 	
 	@Test
 	public void createTestIdNot0() throws Exception {
-		mockMvc.perform(post("/api/v1/userFigurine")
+		mockMvc.perform(post("/api/v1/userFigurines")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(dto)))
 		.andExpect(status().isBadRequest());
@@ -213,7 +213,7 @@ public class UserFugurineControlleurTest {
 	@Test
 	public void createTestUserNull() throws Exception {
 		newDto.setUser(null);
-		mockMvc.perform(post("/api/v1/userFigurine")
+		mockMvc.perform(post("/api/v1/userFigurines")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(newDto)))
 		.andExpect(status().isBadRequest());
@@ -222,7 +222,7 @@ public class UserFugurineControlleurTest {
 	@Test
 	public void createTestFigurineNull() throws Exception {
 		newDto.setFigurine(null);
-		mockMvc.perform(post("/api/v1/userFigurine")
+		mockMvc.perform(post("/api/v1/userFigurines")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(newDto)))
 		.andExpect(status().isBadRequest());
@@ -231,7 +231,7 @@ public class UserFugurineControlleurTest {
 	@Test
 	public void createTestTitleNull() throws Exception {
 		newDto.setTitle(null);
-		mockMvc.perform(post("/api/v1/userFigurine")
+		mockMvc.perform(post("/api/v1/userFigurines")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(newDto)))
 		.andExpect(status().isBadRequest());
@@ -240,7 +240,7 @@ public class UserFugurineControlleurTest {
 	@Test
 	public void createTestTitleEmpty() throws Exception {
 		newDto.setTitle("");
-		mockMvc.perform(post("/api/v1/userFigurine")
+		mockMvc.perform(post("/api/v1/userFigurines")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(newDto)))
 		.andExpect(status().isBadRequest());
@@ -249,7 +249,7 @@ public class UserFugurineControlleurTest {
 	@Test
 	public void createTestTitleBlank() throws Exception {
 		newDto.setTitle("  ");
-		mockMvc.perform(post("/api/v1/userFigurine")
+		mockMvc.perform(post("/api/v1/userFigurines")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(newDto)))
 		.andExpect(status().isBadRequest());
@@ -263,7 +263,7 @@ public class UserFugurineControlleurTest {
 		when(mappeur.userFigurineToDto(userFigurine)).thenReturn(dto);
 		when(service.update(userFigurine)).thenReturn(userFigurine);
 		
-		String result = mockMvc.perform(put("/api/v1/userFigurine/1")
+		String result = mockMvc.perform(put("/api/v1/userFigurines/1")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(dto)))
 		.andExpect(status().isOk())
@@ -278,7 +278,7 @@ public class UserFugurineControlleurTest {
 	
 	@Test
 	public void updateTestIdDtfferenteBodyParam() throws Exception {
-		mockMvc.perform(put("/api/v1/userFigurine/2")
+		mockMvc.perform(put("/api/v1/userFigurines/2")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(dto)))
 		.andExpect(status().isBadRequest());
@@ -287,7 +287,7 @@ public class UserFugurineControlleurTest {
 	@Test
 	public void updateTestId0() throws Exception {
 		dto.setId(0);
-		mockMvc.perform(put("/api/v1/userFigurine/0")
+		mockMvc.perform(put("/api/v1/userFigurines/0")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(dto)))
 		.andExpect(status().isBadRequest());
@@ -296,7 +296,7 @@ public class UserFugurineControlleurTest {
 	@Test
 	public void updateTestUserNull() throws Exception {
 		dto.setUser(null);
-		mockMvc.perform(put("/api/v1/userFigurine/1")
+		mockMvc.perform(put("/api/v1/userFigurines/1")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(newDto)))
 		.andExpect(status().isBadRequest());
@@ -305,7 +305,7 @@ public class UserFugurineControlleurTest {
 	@Test
 	public void updateTestFigurineNull() throws Exception {
 		dto.setFigurine(null);
-		mockMvc.perform(put("/api/v1/userFigurine/1")
+		mockMvc.perform(put("/api/v1/userFigurines/1")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(newDto)))
 		.andExpect(status().isBadRequest());
@@ -314,7 +314,7 @@ public class UserFugurineControlleurTest {
 	@Test
 	public void updateTestTitleNull() throws Exception {
 		dto.setTitle(null);
-		mockMvc.perform(put("/api/v1/userFigurine/1")
+		mockMvc.perform(put("/api/v1/userFigurines/1")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(dto)))
 		.andExpect(status().isBadRequest());
@@ -323,7 +323,7 @@ public class UserFugurineControlleurTest {
 	@Test
 	public void updateTestTitleEmpty() throws Exception {
 		dto.setTitle("");
-		mockMvc.perform(put("/api/v1/userFigurine/1")
+		mockMvc.perform(put("/api/v1/userFigurines/1")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(dto)))
 		.andExpect(status().isBadRequest());
@@ -332,7 +332,7 @@ public class UserFugurineControlleurTest {
 	@Test
 	public void updateTestTitleBlank() throws Exception {
 		dto.setTitle("  ");
-		mockMvc.perform(put("/api/v1/userFigurine/1")
+		mockMvc.perform(put("/api/v1/userFigurines/1")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(dto)))
 		.andExpect(status().isBadRequest());
@@ -346,7 +346,7 @@ public class UserFugurineControlleurTest {
 		when(mappeur.userFigurineToDto(userFigurine)).thenReturn(dto);
 		when(service.delete(userFigurine)).thenReturn(userFigurine);
 		
-		String result = mockMvc.perform(delete("/api/v1/userFigurine/1")
+		String result = mockMvc.perform(delete("/api/v1/userFigurines/1")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(dto)))
 		.andExpect(status().isOk())
@@ -360,7 +360,7 @@ public class UserFugurineControlleurTest {
 	
 	@Test
 	public void deleteTestIdDtfferenteBodyParam() throws Exception {
-		mockMvc.perform(delete("/api/v1/userFigurine/2")
+		mockMvc.perform(delete("/api/v1/userFigurines/2")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(dto)))
 		.andExpect(status().isBadRequest());
@@ -369,7 +369,7 @@ public class UserFugurineControlleurTest {
 	@Test
 	public void deleteTestId0() throws Exception {
 		dto.setId(0);
-		mockMvc.perform(delete("/api/v1/userFigurine/0")
+		mockMvc.perform(delete("/api/v1/userFigurines/0")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(dto)))
 		.andExpect(status().isBadRequest());
@@ -378,7 +378,7 @@ public class UserFugurineControlleurTest {
 	@Test
 	public void deleteTestUserNull() throws Exception {
 		dto.setUser(null);
-		mockMvc.perform(delete("/api/v1/userFigurine/1")
+		mockMvc.perform(delete("/api/v1/userFigurines/1")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(newDto)))
 		.andExpect(status().isBadRequest());
@@ -387,7 +387,7 @@ public class UserFugurineControlleurTest {
 	@Test
 	public void deleteTestFigurineNull() throws Exception {
 		dto.setFigurine(null);
-		mockMvc.perform(delete("/api/v1/userFigurine/1")
+		mockMvc.perform(delete("/api/v1/userFigurines/1")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(newDto)))
 		.andExpect(status().isBadRequest());
@@ -396,7 +396,7 @@ public class UserFugurineControlleurTest {
 	@Test
 	public void deleteTestTitleNull() throws Exception {
 		dto.setTitle(null);
-		mockMvc.perform(delete("/api/v1/userFigurine/1")
+		mockMvc.perform(delete("/api/v1/userFigurines/1")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(dto)))
 		.andExpect(status().isBadRequest());
@@ -405,7 +405,7 @@ public class UserFugurineControlleurTest {
 	@Test
 	public void deleteTestTitleEmpty() throws Exception {
 		dto.setTitle("");
-		mockMvc.perform(delete("/api/v1/userFigurine/1")
+		mockMvc.perform(delete("/api/v1/userFigurines/1")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(dto)))
 		.andExpect(status().isBadRequest());
@@ -414,7 +414,7 @@ public class UserFugurineControlleurTest {
 	@Test
 	public void deleteTestTitleBlank() throws Exception {
 		dto.setTitle("  ");
-		mockMvc.perform(delete("/api/v1/userFigurine/1")
+		mockMvc.perform(delete("/api/v1/userFigurines/1")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(dto)))
 		.andExpect(status().isBadRequest());
@@ -425,7 +425,7 @@ public class UserFugurineControlleurTest {
 		when(mappeur.dtoToUserFigurine(dto)).thenReturn(userFigurine);
 		when(service.delete(userFigurine)).thenThrow(new ObjectNotFoundException("userFigurine"));
 		
-		mockMvc.perform(delete("/api/v1/userFigurine/1")
+		mockMvc.perform(delete("/api/v1/userFigurines/1")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(dto)))
 		.andExpect(status().isNotFound());

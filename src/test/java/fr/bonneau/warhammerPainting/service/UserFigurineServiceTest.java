@@ -72,10 +72,10 @@ public class UserFigurineServiceTest {
 		assertEquals(userFigurines, userFigurinesTest);
 	}
 	
-	//  ---------getAll----------
+	//  ---------getByUserId----------
 	
 	@Test
-	public void getByUderIdTest() {
+	public void getByUserIdTest() {
 		List<UserFigurine> userFigurines = Collections.singletonList(userFigurine);
 		when(reposirory.getByUserId(1)).thenReturn(userFigurines);
 		

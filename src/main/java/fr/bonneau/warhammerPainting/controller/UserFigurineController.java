@@ -22,7 +22,7 @@ import fr.bonneau.warhammerPainting.models.UserFigurine;
 import fr.bonneau.warhammerPainting.service.UserFigurineService;
 
 @RestController
-@RequestMapping("api/v1/userFigurine")
+@RequestMapping("api/v1/userFigurines")
 public class UserFigurineController {
 
 	private UserFigurineMappeur mappeur;
@@ -87,6 +87,6 @@ public class UserFigurineController {
 		 
 		 UserFigurine UserFigurine = mappeur.dtoToUserFigurine(userFigurineDto);
 		 UserFigurineDto userFigurineDtoDelete = mappeur.userFigurineToDto(service.delete(UserFigurine));
-		 return ResponseEntity.ok(String.format("the userFigurine %s has been daleted", userFigurineDtoDelete.getId()));
+		 return ResponseEntity.ok(String.format("The userFigurine %s has been deleted", userFigurineDtoDelete.getId()));
 	}
 }
