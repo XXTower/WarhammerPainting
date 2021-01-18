@@ -30,7 +30,7 @@ public class UserFigurineServiceTest {
 
 	private UserFigurine userFigurine;
 	private UserFigurineService service;
-	private UserFigurineRepository reposirory;
+	private UserFigurineRepository userFigurineReposirory;
 	private FigurineRepository figurineRepository;
 	private Figurine figurine;
 	private PaintingReposirory paintingReposirory;
@@ -66,10 +66,10 @@ public class UserFigurineServiceTest {
 		userFigurine.setUser(user);
 		userFigurine.setListPainting(paintingsSet);
 		
-		reposirory = mock(UserFigurineRepository.class);
+		userFigurineReposirory = mock(UserFigurineRepository.class);
 		figurineRepository = mock(FigurineRepository.class);
 		paintingReposirory = mock(PaintingReposirory.class);
-		service = new UserFigurineService(reposirory, figurineRepository, paintingReposirory);
+		service = new UserFigurineService(userFigurineReposirory, figurineRepository, paintingReposirory);
 	}
 	
 	//  ---------getAll----------
@@ -77,7 +77,7 @@ public class UserFigurineServiceTest {
 	@Test
 	public void getAllTest() {
 		List<UserFigurine> userFigurines = Collections.singletonList(userFigurine);
-		when(reposirory.getALL()).thenReturn(userFigurines);
+		when(userFigurineReposirory.getALL()).thenReturn(userFigurines);
 		
 		List<UserFigurine> userFigurinesTest = service.getAll();
 		assertEquals(userFigurines, userFigurinesTest);
@@ -88,7 +88,7 @@ public class UserFigurineServiceTest {
 	@Test
 	public void getByUserIdTest() {
 		List<UserFigurine> userFigurines = Collections.singletonList(userFigurine);
-		when(reposirory.getByUserId(1)).thenReturn(userFigurines);
+		when(userFigurineReposirory.getByUserId(1)).thenReturn(userFigurines);
 		
 		List<UserFigurine> userFigurinesTest = service.getByUserId(1);
 		assertEquals(userFigurines, userFigurinesTest);
@@ -99,7 +99,7 @@ public class UserFigurineServiceTest {
 	@Test
 	public void getByFigurineIdTest() {
 		List<UserFigurine> userFigurines = Collections.singletonList(userFigurine);
-		when(reposirory.getByFigurineId(1)).thenReturn(userFigurines);
+		when(userFigurineReposirory.getByFigurineId(1)).thenReturn(userFigurines);
 		
 		List<UserFigurine> userFigurinesTest = service.getByFigurineId(1);
 		assertEquals(userFigurines, userFigurinesTest);
@@ -111,11 +111,11 @@ public class UserFigurineServiceTest {
 	public void createTest() throws ObjectNotFoundException {
 	    when(figurineRepository.getById(1)).thenReturn(figurine);
 	    when(paintingReposirory.getAll()).thenReturn(paintings);
-		when(reposirory.saveOrUpdate(userFigurine)).thenReturn(userFigurine);
+		when(userFigurineReposirory.saveOrUpdate(userFigurine)).thenReturn(userFigurine);
 		
 		UserFigurine userFigurineTest = service.create(userFigurine);
 		assertEquals(userFigurine, userFigurineTest);
-		verify(reposirory).saveOrUpdate(userFigurine);
+		verify(userFigurineReposirory).saveOrUpdate(userFigurine);
 	}
 	
 	@Test
@@ -139,11 +139,11 @@ public class UserFigurineServiceTest {
 	public void updateTest() throws ObjectNotFoundException {
 	    when(figurineRepository.getById(1)).thenReturn(figurine);
 	    when(paintingReposirory.getAll()).thenReturn(paintings);
-		when(reposirory.saveOrUpdate(userFigurine)).thenReturn(userFigurine);
+		when(userFigurineReposirory.saveOrUpdate(userFigurine)).thenReturn(userFigurine);
 		
 		UserFigurine userFigurineTest = service.update(userFigurine);
 		assertEquals(userFigurine, userFigurineTest);
-		verify(reposirory).saveOrUpdate(userFigurine);
+		verify(userFigurineReposirory).saveOrUpdate(userFigurine);
 	}
 	
 	@Test
@@ -165,10 +165,10 @@ public class UserFigurineServiceTest {
 	
 	@Test
 	public void deleteTest() throws ObjectNotFoundException  {
-		when(reposirory.delete(userFigurine)).thenReturn(userFigurine);
+		when(userFigurineReposirory.delete(userFigurine)).thenReturn(userFigurine);
 		
 		UserFigurine userFigurineTest = service.delete(userFigurine);
 		assertEquals(userFigurine, userFigurineTest);
-		verify(reposirory).delete(userFigurine);
+		verify(userFigurineReposirory).delete(userFigurine);
 	}
 }
