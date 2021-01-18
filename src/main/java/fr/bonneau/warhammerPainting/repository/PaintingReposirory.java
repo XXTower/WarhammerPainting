@@ -45,4 +45,5 @@ public class PaintingReposirory {
 		paintingQuery.setParameter("type", painting.getType());
 		return !paintingQuery.getResultList().isEmpty();
 	}
+
 }

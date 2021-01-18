@@ -54,7 +54,7 @@ public class UserRepositoryTest {
     }
     
     @Test
-    void getByIdShouldThrowUserNotFound() {
+    void getByIdShouldThrowObjectNotFound() {
         Exception exception = assertThrows(ObjectNotFoundException.class, ()->userRepository.getById(13));
         
         String excpectMessage = "User not found.";

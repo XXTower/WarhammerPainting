@@ -1,6 +1,7 @@
 package fr.bonneau.warhammerPainting.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.util.List;
 
@@ -12,6 +13,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import fr.bonneau.warhammerPainting.exception.ObjectNotFoundException;
 import fr.bonneau.warhammerPainting.models.Figurine;
 import fr.bonneau.warhammerPainting.models.enums.Faction;
 import fr.bonneau.warhammerPainting.models.enums.SubFaction;
@@ -95,6 +97,21 @@ public class FigurineRepositoryTest {
     @Test
     void checkIfExisteShouldReturnFalse() {
         assertThat(figurineRepository.checkIfExiste("toto")).isFalse();
+    }
+    
+    /*-------------------- getById --------------------*/
+
+    @Test
+    void getByIdShouldReturnFigurine() throws ObjectNotFoundException {
+        assertThat(figurineRepository.getById(1)).isEqualTo(figurine);
+    }
+    
+    @Test
+    void getByIdShouldThrowObjectNotFound() {
+        Exception exception = assertThrows(ObjectNotFoundException.class, ()->figurineRepository.getById(13));
+        
+        String excpectMessage = "Figurine not found.";
+        assertThat(exception.getMessage()).contains(excpectMessage);
     }
 
 }
