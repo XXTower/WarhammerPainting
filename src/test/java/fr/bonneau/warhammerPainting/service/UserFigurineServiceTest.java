@@ -1,5 +1,7 @@
 package fr.bonneau.warhammerPainting.service;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -20,6 +22,8 @@ import fr.bonneau.warhammerPainting.models.UserFigurine;
 import fr.bonneau.warhammerPainting.models.enums.Faction;
 import fr.bonneau.warhammerPainting.models.enums.PaintingTypes;
 import fr.bonneau.warhammerPainting.models.enums.SubFaction;
+import fr.bonneau.warhammerPainting.repository.FigurineRepository;
+import fr.bonneau.warhammerPainting.repository.PaintingReposirory;
 import fr.bonneau.warhammerPainting.repository.UserFigurineRepository;
 
 public class UserFigurineServiceTest {
@@ -27,6 +31,10 @@ public class UserFigurineServiceTest {
 	private UserFigurine userFigurine;
 	private UserFigurineService service;
 	private UserFigurineRepository reposirory;
+	private FigurineRepository figurineRepository;
+	private Figurine figurine;
+	private PaintingReposirory paintingReposirory;
+	private List<Painting> paintings;
 
 	@BeforeEach
 	public void beforAll() {
@@ -35,14 +43,15 @@ public class UserFigurineServiceTest {
 		painting.setName("abadon black");
 		painting.setType(PaintingTypes.BASE);
 		
-		Set<Painting> paintings = Collections.singleton(painting);
+		paintings = Collections.singletonList(painting);
+		Set<Painting> paintingsSet = Collections.singleton(painting);
 		
 		User user = new User();
 		user.setId(1);
         user.setUsername("test");
         user.setPassword("test");
         
-        Figurine figurine = new Figurine();
+        figurine = new Figurine();
         figurine.setId(1);
         figurine.setName("test");
         figurine.setFaction(Faction.SPACE_MARINS);
@@ -55,10 +64,12 @@ public class UserFigurineServiceTest {
 		userFigurine.setVisibility(true);
 		userFigurine.setFigurine(figurine);
 		userFigurine.setUser(user);
-		userFigurine.setListPainting(paintings);
+		userFigurine.setListPainting(paintingsSet);
 		
 		reposirory = mock(UserFigurineRepository.class);
-		service = new UserFigurineService(reposirory);
+		figurineRepository = mock(FigurineRepository.class);
+		paintingReposirory = mock(PaintingReposirory.class);
+		service = new UserFigurineService(reposirory, figurineRepository, paintingReposirory);
 	}
 	
 	//  ---------getAll----------
@@ -97,7 +108,9 @@ public class UserFigurineServiceTest {
 	//  ---------create----------
 	
 	@Test
-	public void createTest() {
+	public void createTest() throws ObjectNotFoundException {
+	    when(figurineRepository.getById(1)).thenReturn(figurine);
+	    when(paintingReposirory.getAll()).thenReturn(paintings);
 		when(reposirory.saveOrUpdate(userFigurine)).thenReturn(userFigurine);
 		
 		UserFigurine userFigurineTest = service.create(userFigurine);
@@ -105,16 +118,48 @@ public class UserFigurineServiceTest {
 		verify(reposirory).saveOrUpdate(userFigurine);
 	}
 	
+	@Test
+    public void createTestThrowsObjectNotFound() throws ObjectNotFoundException {
+	    Painting painting = new Painting();
+        painting.setId(2);
+        painting.setName("test");
+        painting.setType(PaintingTypes.BASE);
+        when(figurineRepository.getById(1)).thenReturn(figurine);
+        when(paintingReposirory.getAll()).thenReturn(Collections.singletonList(painting));
+        
+        Exception exception = assertThrows(ObjectNotFoundException.class, ()->service.create(userFigurine));
+        
+        String excpectMessage = "Painting not found.";
+        assertThat(exception.getMessage()).contains(excpectMessage);
+    }
+	
 	//  ---------update----------
 	
 	@Test
-	public void updateTest() {
+	public void updateTest() throws ObjectNotFoundException {
+	    when(figurineRepository.getById(1)).thenReturn(figurine);
+	    when(paintingReposirory.getAll()).thenReturn(paintings);
 		when(reposirory.saveOrUpdate(userFigurine)).thenReturn(userFigurine);
 		
 		UserFigurine userFigurineTest = service.update(userFigurine);
 		assertEquals(userFigurine, userFigurineTest);
 		verify(reposirory).saveOrUpdate(userFigurine);
 	}
+	
+	@Test
+    public void updateTestThrowsObjectNotFound() throws ObjectNotFoundException {
+        Painting painting = new Painting();
+        painting.setId(2);
+        painting.setName("test");
+        painting.setType(PaintingTypes.BASE);
+        when(figurineRepository.getById(1)).thenReturn(figurine);
+        when(paintingReposirory.getAll()).thenReturn(Collections.singletonList(painting));
+        
+        Exception exception = assertThrows(ObjectNotFoundException.class, ()->service.update(userFigurine));
+        
+        String excpectMessage = "Painting not found.";
+        assertThat(exception.getMessage()).contains(excpectMessage);
+    }
 	
 	//  ---------delete----------
 	

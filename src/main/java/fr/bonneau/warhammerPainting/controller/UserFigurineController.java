@@ -29,7 +29,6 @@ public class UserFigurineController {
 	private UserFigurineService service;
 	
 	public UserFigurineController(UserFigurineMappeur mappeur, UserFigurineService service) {
-		super();
 		this.mappeur = mappeur;
 		this.service = service;
 	}
@@ -53,7 +52,7 @@ public class UserFigurineController {
 	}
 	
 	@PostMapping()
-	public ResponseEntity<?> create(@Valid @RequestBody UserFigurineDto userFigurineDto) {
+	public ResponseEntity<?> create(@Valid @RequestBody UserFigurineDto userFigurineDto) throws ObjectNotFoundException {
 		if(userFigurineDto.getId() != 0) {
 			return ResponseEntity.badRequest().body("The Id in body must be equal to 0 or not presente");
 		}
@@ -63,7 +62,7 @@ public class UserFigurineController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<?> update(@PathVariable int id, @Valid @RequestBody UserFigurineDto userFigurineDto) {
+	public ResponseEntity<?> update(@PathVariable int id, @Valid @RequestBody UserFigurineDto userFigurineDto) throws ObjectNotFoundException {
 		if(id != userFigurineDto.getId()) {
 			 return ResponseEntity.badRequest().body("The Id in parameter must be the same in the body of the request");
 		 }

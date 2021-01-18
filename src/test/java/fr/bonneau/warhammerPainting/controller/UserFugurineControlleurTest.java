@@ -176,7 +176,7 @@ public class UserFugurineControlleurTest {
 		when(mappeur.userFigurinesToDtos(userFigurines)).thenReturn(dtos);
 		when(service.getByFigurineId(1)).thenReturn(userFigurines);
 
-		mockMvc.perform(get("/api/v1/userFigurine/figurines/1"))
+		mockMvc.perform(get("/api/v1/userFigurines/figurine/1"))
 			.andExpect(status().isOk())
 			.andExpect(content().json(objectMapper.writeValueAsString(dtos)));
 	}
@@ -255,6 +255,16 @@ public class UserFugurineControlleurTest {
 		.andExpect(status().isBadRequest());
 	}
 	
+	@Test
+    public void createTestServiceThrowNotFoundException() throws Exception {
+	    when(mappeur.dtoToUserFigurine(newDto)).thenReturn(newUserFigurine);
+	    when(service.create(newUserFigurine)).thenThrow(ObjectNotFoundException.class);
+        mockMvc.perform(post("/api/v1/userFigurines")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(newDto)))
+        .andExpect(status().isNotFound());
+    }
+	
 	//  -----------updateTest----------
 	
 	@Test
@@ -298,7 +308,7 @@ public class UserFugurineControlleurTest {
 		dto.setUser(null);
 		mockMvc.perform(put("/api/v1/userFigurines/1")
 				.contentType(MediaType.APPLICATION_JSON)
-				.content(objectMapper.writeValueAsString(newDto)))
+				.content(objectMapper.writeValueAsString(dto)))
 		.andExpect(status().isBadRequest());
 	}
 	
@@ -307,7 +317,7 @@ public class UserFugurineControlleurTest {
 		dto.setFigurine(null);
 		mockMvc.perform(put("/api/v1/userFigurines/1")
 				.contentType(MediaType.APPLICATION_JSON)
-				.content(objectMapper.writeValueAsString(newDto)))
+				.content(objectMapper.writeValueAsString(dto)))
 		.andExpect(status().isBadRequest());
 	}
 	
@@ -338,6 +348,16 @@ public class UserFugurineControlleurTest {
 		.andExpect(status().isBadRequest());
 	}
 	
+	@Test
+    public void updateTestServiceThrowNotFoundException() throws Exception {
+        when(mappeur.dtoToUserFigurine(dto)).thenReturn(userFigurine);
+        when(service.update(userFigurine)).thenThrow(ObjectNotFoundException.class);
+        mockMvc.perform(put("/api/v1/userFigurines/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(dto)))
+        .andExpect(status().isNotFound());
+    }
+	
 //  -----------deleteTest----------
 	
 	@Test
@@ -354,7 +374,7 @@ public class UserFugurineControlleurTest {
         .getResponse()
         .getContentAsString();
 		
-		assertEquals("the userFigurine 1 has been daleted", result);
+		assertEquals("The userFigurine 1 has been deleted", result);
 		verify(service).delete(userFigurine);
 	}
 	
